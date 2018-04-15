@@ -151,6 +151,9 @@ return [
          * Package Service Providers...
          */
 
+        // Laravel IDE helper
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
