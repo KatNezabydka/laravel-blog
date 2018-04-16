@@ -16,6 +16,7 @@ Route::group(['prefix' => 'admin', 'namespace' =>'Admin', 'middleware' => ['auth
     Route::get('/', 'DashboardController@dashboard')->name('admin.index');
     //Для роутов категории выбираем роут ресурсный...так как контроллер тоже типа ресурс
     //добавили массив, в котором для именованного маршрута добавим префикс, чтобы не переплетался с другими ресурсами
+    //['as' =>'admin'] === name('admin')
     Route::resource('/category', 'CategoryController', ['as' =>'admin']);
 });
 

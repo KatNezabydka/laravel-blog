@@ -4,13 +4,14 @@
 
     <div class="container">
 
+        {{--Компонент с хлебными крошками и заголовком--}}
         @component('admin.components.breadcrumb')
             @slot('title') Список категорий @endslot
             @slot('parent') Главная @endslot
             @slot('active') Категории @endslot
         @endcomponent
 
-        <hr>
+        <hr />
         {{--кнопка для создания категории--}}
         {{--route('admin.category.index') - так как роут типа ресурс--}}
         <a href="{{route('admin.category.create')}}" class="btn btn-primary pull-right">

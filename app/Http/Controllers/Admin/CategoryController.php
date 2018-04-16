@@ -32,6 +32,16 @@ class CategoryController extends Controller
     public function create()
     {
         //отвечает за открытие формы "Создание категории"
+        return view('admin.categories.create', [
+            'category' => [],
+            //колекция категорий (с вложенными)
+            // with('children') - указывает метод в модели Категория
+            // where - получаем только те категории, которые являются родителями
+            'categories' => Category::with('children')->where('parent_id', '0')->get(),
+            // символ, обозначающий вложенность
+            'delimiter' => ''
+        ]);
+
     }
 
     /**
@@ -43,6 +53,12 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //отвечает за создание записи в таблице
+        //Пишем модель и метод для массового заполнения (здесь использовать create лучше чем save - почему?)
+        //в create передаем значение фасада $request со значениями нашей формы
+        Category::create($request->all());
+
+        //возвращаем именованный маршрут со списком категорий
+        return redirect()->route('admin.category.index');
     }
 
     /**
