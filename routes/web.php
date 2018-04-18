@@ -18,6 +18,7 @@ Route::group(['prefix' => 'admin', 'namespace' =>'Admin', 'middleware' => ['auth
     //добавили массив, в котором для именованного маршрута добавим префикс, чтобы не переплетался с другими ресурсами
     //['as' =>'admin'] === name('admin')
     Route::resource('/category', 'CategoryController', ['as' =>'admin']);
+    Route::resource('/article', 'ArticleController', ['as' =>'admin']);
 });
 
 Route::get('/', function () {

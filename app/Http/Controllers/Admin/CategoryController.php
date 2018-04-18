@@ -80,7 +80,18 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //отвечает за открытие формы обновления
+        //отвечает за открытие формы редактирования категорий
+        return view('admin.categories.edit', [
+            'category' => $category,
+            //колекция категорий (с вложенными)
+            // with('children') - указывает метод в модели Категория
+            // where - получаем только те категории, которые являются родителями - чтобы не делать дополнительные выборки с бд
+            'categories' => Category::with('children')->where('parent_id', '0')->get(),
+            // символ, обозначающий вложенность
+            'delimiter' => ''
+
+        ]);
+
     }
 
     /**
@@ -93,6 +104,9 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         //отвечает за обновление
+        //не включаем в обновление поле slug - оно не должно меняться
+        $category->update($request->except('slug'));
+        return redirect()->route('admin.category.index');
     }
 
     /**
@@ -104,5 +118,9 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //для удаления
+        $category->delete();
+
+
+        return redirect()->route('admin.category.index');
     }
 }

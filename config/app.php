@@ -151,9 +151,6 @@ return [
          * Package Service Providers...
          */
 
-        // Laravel IDE helper
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-
         /*
          * Application Service Providers...
          */
@@ -162,6 +159,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        //Our package
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Unisharp\Ckeditor\ServiceProvider::class,
 
     ],
 
