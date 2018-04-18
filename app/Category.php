@@ -27,4 +27,19 @@ class Category extends Model
         //self::class - имя текущей модели
         return $this->hasMany(self::class, 'parent_id');
     }
+
+    //Polymorphic relation with articles - метод обратный полиморфной связи morphedByMany
+    public function articles()
+    {
+        //morphToMany('App\Category', 'categoryable') - название связной модели и приставка из миграции (categoryable_id)
+        return $this->morphedByMany('App\Article', 'categoryable');
+    }
+
+    //Статистика
+    public function scopeLastCategories($query, $count)
+    {
+        //возвращаем определенное количество $count
+        return $query->orderBy('created_at', 'desc')->take($count)->get();
+    }
+
 }
