@@ -164,6 +164,9 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Unisharp\Ckeditor\ServiceProvider::class,
 
+        //Own providers
+        App\Providers\BlogServiceProvider::class,
+
     ],
 
     /*
