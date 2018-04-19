@@ -16,6 +16,7 @@
 
             {{--Form include--}}
             @include('admin.articles.partials.form')
+            {{--храним id пользователя, который создает запись--}}
             <input type="hidden" name="created_by" value="{{Auth::id()}}">
         </form>
 
