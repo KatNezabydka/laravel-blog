@@ -10,7 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Группа роутов для админки, в скобках пишем параметры для всей группы маршрутов
+
+
+//Для отображения категорий и новостей
+Route::get('blog/category/{slug?}', 'BlogController@category')->name('category');
+Route::get('blog/article/{slug?}', 'BlogController@article')->name('article');
+
+//ADMIN, в скобках пишем параметры для всей группы маршрутов
 //Route фасад
 Route::group(['prefix' => 'admin', 'namespace' =>'Admin', 'middleware' => ['auth']], function(){
     Route::get('/', 'DashboardController@dashboard')->name('admin.index');
