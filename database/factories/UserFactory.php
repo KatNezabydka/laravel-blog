@@ -14,10 +14,42 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(App\User::class, function (Faker $faker) {
+    static $password;
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+        'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
+    ];
+});
+//defineAs - потому что define уже есть
+//admin - имя фабрики
+$factory->defineAs(App\User::class, 'admin', function(Faker $faker) {
+    return [
+        'name' => 'admin',
+        'email' => $faker->unique()->safeEmail,
+        'password' => bcrypt('111111'),
+        'remember_token' => str_random(10),
+    ];
+});
+//так как заполняем связанные таблицы, нужно их заполнить тоже
+//таблица roles заполняем
+$factory->defineAs(App\Role::class, 'admin', function(Faker $faker) {
+    return [
+        'name' => 'Администратор',
+        'slug' => 'admin',
+        'description' => 'Администратор с полными правами',
+        'group' => 'администраторы',
+    ];
+});
+//таблицы с нашим ФИО заполняем
+$factory->defineAs(App\UserAdditional::class, 'admin', function(Faker $faker) {
+    // Генерация ФИО на русском, используя фасад Factory
+    $faker = \Faker\Factory::create('ru_RU');
+    return [
+        'lastname' => $faker->lastName,
+        'firstname' => $faker->firstName,
+        'patronymic' => 'Иванович',
+
     ];
 });

@@ -99,7 +99,7 @@ class ArticleController extends Controller
         $article->update($request->except('slug'));
         //если список редактирования пуст, значит нет привязанных категорий => нужно удалить
         //detach() - уничтожает все записи попадающие под совпадение id новости
-        //atach() - а если существует - тогда подключаем наши категории
+        //attach() - а если существует - тогда подключаем наши категории
 
         $article->categories()->detach();
         if($request->input('categories')) :

@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         $this->call(ArticlesTableSeeder::class);
+        //определяем нашу модель с посевом
+      $this->call(UsersTableSeeder::class);
     }
 }
