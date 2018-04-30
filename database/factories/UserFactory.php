@@ -22,6 +22,16 @@ $factory->define(App\User::class, function (Faker $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->defineAs(App\User::class, 'main', function(Faker $faker) {
+    return [
+        'name' => 'Kat',
+        'email' => 'katorif@ukr.net',
+        'password' => bcrypt('111111'),
+        'remember_token' => str_random(10),
+    ];
+});
+
 //defineAs - потому что define уже есть
 //admin - имя фабрики
 $factory->defineAs(App\User::class, 'admin', function(Faker $faker) {
@@ -50,6 +60,15 @@ $factory->defineAs(App\UserAdditional::class, 'admin', function(Faker $faker) {
         'lastname' => $faker->lastName,
         'firstname' => $faker->firstName,
         'patronymic' => 'Иванович',
+
+    ];
+});
+
+$factory->defineAs(App\UserAdditional::class, 'main', function(Faker $faker) {
+    return [
+        'lastname' => 'Корнышева',
+        'firstname' => 'Екатерина',
+        'patronymic' => 'Юрьевна',
 
     ];
 });

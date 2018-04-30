@@ -13,5 +13,6 @@ class DatabaseSeeder extends Seeder
     {
         //определяем нашу модель с посевом
       $this->call(UsersTableSeeder::class);
+      $this->call(ArticlesTableSeeder::class);
     }
 }

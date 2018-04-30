@@ -13,6 +13,17 @@ class UsersTableSeeder extends Seeder
     {
 
         $role= factory(App\Role::class, 'admin')->create();
+
+        factory(App\User::class, 'main', 1)->create()->each(function ($user) use($role){
+            //записываем в бд роли юзерам через связь users() - многие ко многим
+            $role->users()->attach($user);
+            //то есть вызываем фабрику для генерации ФИО и РОЛЕЙ
+            //save(factory(App\UserAdditional::class, 'admin') - сохраняем в связной модели и в скобках вызываем генерацию ФИО
+            $user->user_additional()->save(factory(App\UserAdditional::class, 'main')->make());
+            // выносим это поле, чтобы 5 ролей не создавать
+            //$user->roles()->save(factory(App\Role::class, 'admin')->make());
+        });
+
         //чтобы пользователем была присвоена роль администратора, нужно передать параметр role
         //each() - для вложенных отношений
         //factory(App\User::class, 'admin', 1) - вызываем фабрику с имнем admin, 1 - количество циклов
@@ -25,5 +36,6 @@ class UsersTableSeeder extends Seeder
             // выносим это поле, чтобы 5 ролей не создавать
             //$user->roles()->save(factory(App\Role::class, 'admin')->make());
         });
+
     }
 }
