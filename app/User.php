@@ -36,4 +36,16 @@ class User extends Authenticatable
     public function user_additional(){
         return $this->hasOne('App\UserAdditional');
     }
+
+    //One to many
+    public function articles(){
+        return $this->hasMany('App\Article');
+    }
+
+    // Users и Comment - многие к одному - один юзер может написать много коммент, получаем комменты, которые привязанны к конкретному пользователю
+    public function comment()
+    {
+        return $this->hasMany('App\Comment');
+    }
 }
+

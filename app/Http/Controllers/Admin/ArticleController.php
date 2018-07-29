@@ -6,6 +6,8 @@ use App\Article;
 use App\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ArticleController extends Controller
 {
@@ -16,9 +18,11 @@ class ArticleController extends Controller
      */
     public function index()
     {
+//        $articles = Article::orderBy('created_at', 'desc')->paginate(10);
+        $articles = Article::UserArticles(Auth::id());
         //в параметрах список новостей, сортировать будем в обратном порядке по дате создания
         return view('admin.articles.index', [
-            'articles' => Article::orderBy('created_at', 'desc')->paginate(10)
+            'articles' => $articles
         ]);
     }
 
@@ -45,6 +49,21 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'title' => 'required|unique:articles|max:120',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('admin/article/create')
+                ->withErrors($validator)
+                ->withInput();
+        }
+//            // фасад Response - абстракция отправляемого ответа
+//            //$validator->errors()->all() - преобразует объект в массив метод all()
+//            return \Response::json(['error' => $validator->errors()->all()]);
+//        }
+
         // передаем переменной все параметры с request для создания новости
         $article = Article::create($request->all());
 

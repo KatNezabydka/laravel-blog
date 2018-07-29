@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Comment;
+use Illuminate\Support\Facades\Auth;
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BlogController extends Controller
 {
@@ -22,9 +25,14 @@ class BlogController extends Controller
     }
 
     public function article($slug){
+        $article = Article::where('slug', $slug)->first();
+//        $comments = $this->getComments();
+        $comments = $article->comments->load('user', 'article');
+
         return view('blog.article', [
           //Передаем новость найденную по slug части
-            'article' => Article::where('slug', $slug)->first(),
+            'article' => $article,
+            'comments' => $comments
         ]);
     }
 }

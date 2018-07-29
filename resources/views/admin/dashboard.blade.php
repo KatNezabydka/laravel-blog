@@ -13,16 +13,16 @@
                     <p><span class="label lavel-primary">Материалов {{ $count_articles}}</span></p>
                 </div>
             </div>
-            <div class="col-sm-3">
-                <div class="jumbotron">
-                    <p><span class="label lavel-primary">Посетителей 0</span></p>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="jumbotron">
-                    <p><span class="label lavel-primary">Сегодня 0</span></p>
-                </div>
-            </div>
+            {{--<div class="col-sm-3">--}}
+                {{--<div class="jumbotron">--}}
+                    {{--<p><span class="label lavel-primary">Посетителей 0</span></p>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+            {{--<div class="col-sm-3">--}}
+                {{--<div class="jumbotron">--}}
+                    {{--<p><span class="label lavel-primary">Сегодня 0</span></p>--}}
+                {{--</div>--}}
+            {{--</div>--}}
         </div>
         <div class="row">
             <div class="col-sm-6">

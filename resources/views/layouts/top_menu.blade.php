@@ -3,9 +3,13 @@
     {{--Если у категорий есть вложенные пункты, тогда ...--}}
     @if ($category->children->where('published', 1)->count())
         <li class="dropdown dropdown-item">
-            <a href="{{ url("/blog/category/$category->slug")}}" class="dropdown-toggle"
+            <a href="{{ url("/blog/category/$category->slug")}}"
+               role="button" aria-expanded="false">
+                {{$category->title}}
+            </a>
+            <a href="" class="dropdown-toggle"
                data-toggle="dropdown" role="button" aria-expanded="false">
-                {{$category->title}}<span class="caret"></span>
+               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu" role="menu">
                 {{--для вложенного списка, передаем детей, а не родителя--}}
