@@ -1,0 +1,31 @@
+Получить список новостей:
+get: http://laravel-blog/api/articles
+
+Получить новость:
+get: http://laravel-blog/api/articles/{id}
+
+Создать новость:
+post: http://laravel-blog/api/articles
+	body:
+ 	{
+
+        "title": "Н-4",
+
+        "slug": "n-4",
+
+        "published": "1",
+
+        "description": "gjghjghjghjgh"
+ 
+	}
+
+Редактировать новость:
+put: http://laravel-blog/api/articles/{id}
+	body:
+ 	{
+
+        "title": "Н-5",
+
+	}
+Удалить новость:
+delete: http://laravel-blog/api/articles/{id}
