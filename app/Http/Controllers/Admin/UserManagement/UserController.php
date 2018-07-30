@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin\Usermanagement;
 
 use App\User;
+use App\UserAdditional;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -15,9 +17,12 @@ class UserController extends Controller
      */
     public function index()
     {
+//        return view('admin.user_management.users.index', [
+//        //paginate(10) - выбирает из бд и делает пагинацию
+//            'users' => User::paginate(10)
+//        ]);
         return view('admin.user_management.users.index', [
-        //paginate(10) - выбирает из бд и делает пагинацию
-            'users' => User::paginate(10)
+            'user' => Auth::user()
         ]);
     }
 
@@ -44,15 +49,25 @@ class UserController extends Controller
         // перед сохранением данных делаем дополнительную валидацию полей
         $validator = $request->validate([
             'name' => 'required|string|max:255',
+            'lastname' => 'string|max:255',
+            'patronymic' => 'string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
         //вызываем метод массового заполнения
-        User::create([
+        $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => bcrypt($request['password'])
         ]);
+        $user->user_additional()->create([
+            'user_id' => $user->id,
+            'firstname' => $request['name'],
+            'lastname' => $request['lastname'],
+            'patronymic' => $request['patronymic']
+        ]);
+
+
         return redirect()->route('admin.user_management.user.index');
     }
 
@@ -108,7 +123,14 @@ class UserController extends Controller
         $user->email = $request['email'];
         // если пароль не меняли нужно ничего не передавать, иначе передать новое значение
         $request['password'] == null ?: $user->password = bcrypt($request['password']);
-        $user->save();
+
+        $update_user = $user->save();
+//        $update_user->user_additional()->create([
+//            'firstname' => $request['name'],
+//            'lastname' => $request['lastname'],
+//            'patronymic' => $request['patronymic']
+//        ]);
+
 
         return redirect()->route('admin.user_management.user.index');
     }

@@ -28,10 +28,10 @@ Route::group(['prefix' => 'admin', 'namespace' =>'Admin', 'middleware' => ['auth
 
     //т.к. namespase отличаются и мы добавим еще управление ролями, делаем группу
     //т.к это вложенный маршрут он уже то префикс и namespace дополняются от admin
-//    Route::group([ 'prefix' => 'user_management', 'namespace' => 'Usermanagement' ], function (){
-//    //['as' => 'admin.user_management'] - префикс для именованного маршрута
-//        Route::resource('/user', 'UserController', ['as' => 'admin.user_management']);
-//    });
+    Route::group([ 'prefix' => 'user_management', 'namespace' => 'Usermanagement' ], function (){
+    //['as' => 'admin.user_management'] - префикс для именованного маршрута
+        Route::resource('/user', 'UserController', ['as' => 'admin.user_management']);
+    });
 
 });
 Route::resource('comment','CommentController',['only' =>['store']]);

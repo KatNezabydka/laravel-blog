@@ -66,7 +66,7 @@ $factory->defineAs(App\UserAdditional::class, 'admin', function(Faker $faker) {
 
 $factory->defineAs(App\UserAdditional::class, 'main', function(Faker $faker) {
     return [
-        'lastname' => 'Корнышева',
+        'lastname' => 'Петрова',
         'firstname' => 'Екатерина',
         'patronymic' => 'Юрьевна',
 
