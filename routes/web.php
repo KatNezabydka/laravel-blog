@@ -15,6 +15,8 @@
 //Для отображения категорий и новостей
 Route::get('blog/category/{slug?}', 'BlogController@category')->name('category');
 Route::get('blog/article/{slug?}', 'BlogController@article')->name('article');
+//Для подписок
+Route::post('blog/article/{slug?}', 'BlogController@subscribe')->name('subscribe');
 
 //ADMIN, в скобках пишем параметры для всей группы маршрутов
 //Route фасад

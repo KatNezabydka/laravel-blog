@@ -24,15 +24,24 @@ class BlogController extends Controller
         ]);
     }
 
-    public function article($slug){
+    public function article($slug)
+    {
         $article = Article::where('slug', $slug)->first();
 //        $comments = $this->getComments();
         $comments = $article->comments->load('user', 'article');
 
         return view('blog.article', [
-          //Передаем новость найденную по slug части
+            //Передаем новость найденную по slug части
             'article' => $article,
             'comments' => $comments
         ]);
     }
+    public function subscribe(Request $request)
+    {
+        $article_id = $request->article_id;
+        $user_id = $request->user_id;
+        dd($request);
+        return redirect()->back();
+    }
+
 }

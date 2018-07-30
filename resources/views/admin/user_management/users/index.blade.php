@@ -23,6 +23,8 @@
             <thead>
             <th>Имя</th>
             <th>Email</th>
+            <th>Фамилия</th>
+            <th>Отчество</th>
             <th class="text-right">Действие</th>
             </thead>
             <tbody>
@@ -30,6 +32,8 @@
                 <tr>
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
+                    <td>{{ $user->user_additional->lastname or ""}}</td>
+                    <td>{{ $user->user_additional->patronymic or ""}}</td>
                     <td class="text-right">
                         <a class="btn btn-default" href="{{route('admin.user_management.user.edit', $user)}}">
                             <i class="fa fa-edit"></i></a>
