@@ -28,7 +28,7 @@ use Faker\Generator as Faker;
 //});
 
 
-$factory->defineAs(App\Article::class,'admin1', function (Faker $faker) {
+$factory->defineAs(App\Article::class,'test1', function (Faker $faker) {
     return [
         'title' => $faker->unique()->word,
         'slug' => $faker->unique(),
@@ -38,11 +38,12 @@ $factory->defineAs(App\Article::class,'admin1', function (Faker $faker) {
         'meta_description' => $faker->sentence($nbWords = 3, $variableNbWords = true),
         'meta_keyword' => $faker->sentence($nbWords = 3, $variableNbWords = true),
         'published' => '1',
+        'created_by' => '1'
 
     ];
 });
 
-$factory->defineAs(App\Article::class,'admin2', function (Faker $faker) {
+$factory->defineAs(App\Article::class,'test2', function (Faker $faker) {
     return [
         'title' => $faker->unique()->word,
         'slug' => $faker->unique(),
@@ -52,11 +53,12 @@ $factory->defineAs(App\Article::class,'admin2', function (Faker $faker) {
         'meta_description' => $faker->sentence($nbWords = 3, $variableNbWords = true),
         'meta_keyword' => $faker->sentence($nbWords = 3, $variableNbWords = true),
         'published' => '1',
+        'created_by' => '2'
 
     ];
 });
 
-$factory->defineAs(App\Article::class,'admin3', function (Faker $faker) {
+$factory->defineAs(App\Article::class,'test3', function (Faker $faker) {
     return [
         'title' => $faker->unique()->word,
         'slug' => $faker->unique(),
@@ -66,14 +68,15 @@ $factory->defineAs(App\Article::class,'admin3', function (Faker $faker) {
         'meta_description' => $faker->sentence($nbWords = 3, $variableNbWords = true),
         'meta_keyword' => $faker->sentence($nbWords = 3, $variableNbWords = true),
         'published' => '1',
+        'created_by' => '3'
 
     ];
 });
 
 //таблица categories заполняем
-$factory->defineAs(App\Category::class, 'admin1', function(Faker $faker) {
+$factory->defineAs(App\Category::class, 'test1', function(Faker $faker) {
     return [
-        'title' => 'Первая',
+        'title' => 'Категория-1',
         'slug' => 'pervaya-3004180939',
         'parent_id' => '0',
         'published' => '1',
@@ -81,9 +84,9 @@ $factory->defineAs(App\Category::class, 'admin1', function(Faker $faker) {
 });
 
 //таблица categories заполняем
-$factory->defineAs(App\Category::class, 'admin2', function(Faker $faker) {
+$factory->defineAs(App\Category::class, 'test2', function(Faker $faker) {
     return [
-        'title' => 'Вторая',
+        'title' => 'Категория-2',
         'slug' => 'vtoraya-3004180939',
         'parent_id' => '0',
         'published' => '1',
@@ -91,9 +94,9 @@ $factory->defineAs(App\Category::class, 'admin2', function(Faker $faker) {
 });
 
 //таблица categories заполняем
-$factory->defineAs(App\Category::class, 'admin3', function(Faker $faker) {
+$factory->defineAs(App\Category::class, 'test3', function(Faker $faker) {
     return [
-        'title' => 'Третья',
+        'title' => 'Категория-3',
         'slug' => 'tretaya-3004180939',
         'parent_id' => '0',
         'published' => '1',

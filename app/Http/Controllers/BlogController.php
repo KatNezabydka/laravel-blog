@@ -29,14 +29,11 @@ class BlogController extends Controller
         $article = Article::where('slug', $slug)->first();
         $comments = $article->comments->load('user', 'article');
         //список подписчиков на данного автора
-        $subscribers = $article->user->users;
-//        dd($subscribers->contains(Auth::id()));
 
         return view('blog.article', [
             //Передаем новость найденную по slug части
             'article' => $article,
-            'comments' => $comments,
-            'subscribers' => $subscribers
+            'comments' => $comments
         ]);
     }
 
