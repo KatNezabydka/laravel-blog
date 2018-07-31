@@ -12,7 +12,7 @@
                 <h1>{{ $article->title }}</h1>
                 <p>{!! $article->description !!}</p>
                 <div>Автор статьи: <span>{{ $article->user->name or ""}}</span></div>
-
+                <h1>Подписчиков {{ $subscribers->count() }}</h1>
                 {{--ПОДПИСКА--}}
                 @if(Auth::check() && !empty($article->user->name))
                 <form id="form_id" class="form-horizontal" action="{{ route('subscribe') }}" method="post">
@@ -20,6 +20,8 @@
                     {{--храним id пользователя, который создает запись--}}
                     <input type="hidden" name="user_id" value="{{Auth::id()}}">
                     <input type="hidden" name="subscribers_id" value="{{$article->user->id}}">
+                    {{--на себя нельзя подписаться--}}
+                    {{--<button type="submit" class="btn btn-primary" @if ($subscribers->contains(Auth::id())) disabled="disabled" @endif>Подписаться</button>--}}
                     <button type="submit" class="btn btn-primary">Подписаться</button>
                 </form>
                 @endif

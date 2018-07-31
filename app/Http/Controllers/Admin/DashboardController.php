@@ -20,7 +20,10 @@ class DashboardController extends Controller
             'articles' => Article::LastUserArticles(5, Auth::id()),
             'count_categories' => Category::count(),
 //            'count_articles' => Article::count()
-            'count_articles' => Article::CountUserArticles(Auth::id())
+            'count_articles' => Article::CountUserArticles(Auth::id()),
+            //список подписчиков на данного автора
+            'subscribers' => Auth::user()->users
+
         ]);
     }
 }

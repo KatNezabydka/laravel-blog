@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Category;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -26,13 +27,16 @@ class BlogController extends Controller
     public function article($slug)
     {
         $article = Article::where('slug', $slug)->first();
-//        $comments = $this->getComments();
         $comments = $article->comments->load('user', 'article');
+        //список подписчиков на данного автора
+        $subscribers = $article->user->users;
+//        dd($subscribers->contains(Auth::id()));
 
         return view('blog.article', [
             //Передаем новость найденную по slug части
             'article' => $article,
-            'comments' => $comments
+            'comments' => $comments,
+            'subscribers' => $subscribers
         ]);
     }
 
