@@ -45,8 +45,9 @@ class BlogController extends Controller
         //Находим пользователя, который делает подписку
         $user = User::where('id', $user_id)->first();
 
-        $relations= $user->subscribers()->where('subscrible_id', $subscribers_id)->get();
-        if (empty($relations)) {
+        //Записываем только если такой связи нет
+        $relations= $user->subscribers()->where('subscrible_id', $subscribers_id)->where('user_id', $user_id )->get();
+        if (empty($relations->toArray())) {
             $user->subscribers()->attach($user, ['subscrible_id' => $subscribers_id, 'user_id' => $user_id]);
         }
 
