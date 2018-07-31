@@ -13,14 +13,13 @@
                 <p>{!! $article->description !!}</p>
                 <div>Автор статьи: <span>{{ $article->user->name or ""}}</span></div>
 
-
                 {{--ПОДПИСКА--}}
-                @if(Auth::check())
+                @if(Auth::check() && !empty($article->user->name))
                 <form id="form_id" class="form-horizontal" action="{{ route('subscribe') }}" method="post">
                     {{ csrf_field() }}
                     {{--храним id пользователя, который создает запись--}}
                     <input type="hidden" name="user_id" value="{{Auth::id()}}">
-                    <input type="hidden" name="article_id" value="{{$article->id}}">
+                    <input type="hidden" name="subscribers_id" value="{{$article->user->id}}">
                     <button type="submit" class="btn btn-primary">Подписаться</button>
                 </form>
                 @endif

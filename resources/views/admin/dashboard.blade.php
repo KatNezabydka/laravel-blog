@@ -10,7 +10,7 @@
             </div>
             <div class="col-sm-3">
                 <div class="jumbotron">
-                    <p><span class="label lavel-primary">Материалов {{ $count_articles}}</span></p>
+                    <p><span class="label lavel-primary">Материалов {{ $count_articles or ""}}</span></p>
                 </div>
             </div>
             {{--<div class="col-sm-3">--}}

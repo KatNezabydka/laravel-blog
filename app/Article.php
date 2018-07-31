@@ -32,10 +32,6 @@ class Article extends Model
     public function user(){
         return $this->belongsTo('App\User', 'created_by', 'id');
     }
-    //Получить подписчиков на статью
-    public function user_subscribe(){
-        return $this->belongsToMany('App\User');
-    }
 
    //Article и Comment - многие к одному - у одной записи может быть множество комментариев, получаем коментарии, привязанные к записи
     public function comments() {

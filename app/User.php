@@ -47,9 +47,13 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Comment');
     }
-    //Получить статьи на которые подписаны (через автора) subscribe
-    public function article_subscribe(){
-        return $this->belongsToMany('App\User');
+    //Получить подписчиков данного user
+    public function subscribers(){
+        return $this->belongsToMany('App\User', 'user_subscrible', 'user_id','subscrible_id');
+    }
+    //Получить список подписок, на кого подписан
+    public function users(){
+        return $this->belongsToMany('App\User', 'user_subscrible','subscrible_id','user_id');
     }
 }
 

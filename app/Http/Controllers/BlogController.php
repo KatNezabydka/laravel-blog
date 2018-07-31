@@ -3,22 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Article;
-use App\Comment;
-use Illuminate\Support\Facades\Auth;
 use App\Category;
+use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class BlogController extends Controller
 {
     //отображение категорий, в скобках параметр который может прийти из get запросса
     //blog/category/{slug?}
-    public function category($slug){
+    public function category($slug)
+    {
         // находим категорию, которая пришла к нам из запроса
         //first()- извлекать первое значение
         $category = Category::where('slug', $slug)->first();
         return view('blog.category', [
-           'category' => $category,
+            'category' => $category,
             //получаем список опубликованных новостей данной категории используя полиморфную связь
             'articles' => $category->articles()->where('published', 1)->paginate(12),
         ]);
@@ -36,11 +35,21 @@ class BlogController extends Controller
             'comments' => $comments
         ]);
     }
+
     public function subscribe(Request $request)
     {
-        $article_id = $request->article_id;
+        //кто подписывается
         $user_id = $request->user_id;
-        dd($request);
+        //на кого
+        $subscribers_id = $request->subscribers_id;
+        //Находим пользователя, который делает подписку
+        $user = User::where('id', $user_id)->first();
+
+        $relations= $user->subscribers()->where('subscrible_id', $subscribers_id)->get();
+        if (empty($relations)) {
+            $user->subscribers()->attach($user, ['subscrible_id' => $subscribers_id, 'user_id' => $user_id]);
+        }
+
         return redirect()->back();
     }
 
