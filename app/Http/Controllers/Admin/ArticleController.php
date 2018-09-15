@@ -16,8 +16,10 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $request->session()->reflash();
+        dd($request->session()->all());
 //        $articles = Article::orderBy('created_at', 'desc')->paginate(10);
         $articles = Article::UserArticles(Auth::id());
         //в параметрах список новостей, сортировать будем в обратном порядке по дате создания
@@ -49,6 +51,7 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
+
         $data = $request->all();
         $validator = Validator::make($data, [
             'title' => 'required|unique:articles|max:120',
@@ -95,8 +98,9 @@ class ArticleController extends Controller
      * @param  \App\Article $article
      * @return \Illuminate\Http\Response
      */
-    public function edit(Article $article)
+    public function edit(Article $article, Request $request)
     {
+
         return view('admin.articles.edit', [
             'article'    => $article,
             'categories' => Category::with('children')->where('parent_id', 0)->get(),
@@ -136,8 +140,8 @@ class ArticleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Article $article)
-    {
-        //отсоединяем все связи с категориями
+     {
+       //отсоединяем все связи с категориями
         $article->categories()->detach();
         //удаляем экземпляр новости из базы
         $article->delete();
