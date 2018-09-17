@@ -4,4 +4,5 @@
 
     <ex-comp></ex-comp>
 
+    <new-comp :articles="{{ $articles }}"></new-comp>
 @endsection

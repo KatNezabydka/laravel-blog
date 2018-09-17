@@ -22,9 +22,8 @@ window.Vue = require('vue');
  */
 
 Vue.component('ex-comp', require('./components/ExampleComponent.vue'));
+Vue.component('new-comp', require('./components/NewComponent.vue'));
 
 const app = new Vue({
     el: '#app'
 });
-
-console.log(app);

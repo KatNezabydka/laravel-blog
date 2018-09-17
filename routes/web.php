@@ -38,10 +38,13 @@ Route::group(['prefix' => 'admin', 'namespace' =>'Admin', 'middleware' => ['auth
 });
 Route::resource('comment','CommentController',['only' =>['store']]);
 
-Route::get('/', function () {
-//        App\Jobs\SendMessage::dispatch("TEST MESSAGE")->delay(now()->addMinute(1));
-    return view('blog.home');
-});
+Route::get('/', 'HomeController@index');
+
+
+//Route::get('/', function () {
+////        App\Jobs\SendMessage::dispatch("TEST MESSAGE")->delay(now()->addMinute(1));
+//    return view('blog.home');
+//});
 
 Auth::routes();
 

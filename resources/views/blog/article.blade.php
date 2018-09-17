@@ -10,19 +10,26 @@
         <div class="row">
             <div class="col-sm-12">
                 <h1>{{ $article->title }}</h1>
+
                 <p>{!! $article->description !!}</p>
+
                 <div>Автор статьи: <span>{{ $article->user->name or ""}}</span></div>
+
+
+
                 {{--ПОДПИСКА--}}
                 @if(Auth::check() && !empty($article->user->name))
-                <form id="form_id" class="form-horizontal" action="{{ route('subscribe') }}" method="post">
-                    {{ csrf_field() }}
-                    {{--храним id пользователя, который создает запись--}}
-                    <input type="hidden" name="user_id" value="{{Auth::id()}}">
-                    <input type="hidden" name="subscribers_id" value="{{$article->user->id}}">
-                    {{--на себя нельзя подписаться--}}
-                    {{--Делаем кнопку неактивной, если эмы автор статьи--}}
-                    <button type="submit" class="btn btn-primary" @if ($article->user->id == Auth::id()) disabled @endif>Подписаться</button>
-                </form>
+                    <form id="form_id" class="form-horizontal" action="{{ route('subscribe') }}" method="post">
+                        {{ csrf_field() }}
+                        {{--храним id пользователя, который создает запись--}}
+                        <input type="hidden" name="user_id" value="{{Auth::id()}}">
+                        <input type="hidden" name="subscribers_id" value="{{$article->user->id}}">
+                        {{--на себя нельзя подписаться--}}
+                        {{--Делаем кнопку неактивной, если эмы автор статьи--}}
+                        <button type="submit" class="btn btn-primary"
+                                @if ($article->user->id == Auth::id()) disabled @endif>Подписаться
+                        </button>
+                    </form>
                 @endif
                 {{--<div>Количество просмотров: {{$article->viewed}}</div>--}}
             </div>
