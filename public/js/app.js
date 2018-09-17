@@ -13897,11 +13897,13 @@ window.Vue = __webpack_require__(36);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', __webpack_require__(39));
+Vue.component('ex-comp', __webpack_require__(39));
 
 var app = new Vue({
   el: '#app'
 });
+
+console.log(app);
 
 /***/ }),
 /* 13 */
@@ -47305,6 +47307,7 @@ module.exports = function normalizeComponent (
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
