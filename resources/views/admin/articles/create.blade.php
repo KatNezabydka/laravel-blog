@@ -6,10 +6,20 @@
         @component('admin.components.breadcrumb')
             @slot('title') Создание новости @endslot
             @slot('parent') Главная @endslot
-            @slot('active') Категории @endslot
+            @slot('active') Новости @endslot
         @endcomponent
 
         <hr/>
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <form id="form_id" class="form-horizontal" action="{{ route('admin.article.store') }}" method="post">
             {{ csrf_field() }}

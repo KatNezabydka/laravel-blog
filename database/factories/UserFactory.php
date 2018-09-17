@@ -26,7 +26,7 @@ $factory->define(App\User::class, function (Faker $faker) {
 $factory->defineAs(App\User::class, 'main', function(Faker $faker) {
     return [
         'name' => 'Kat',
-        'email' => 'katorif@ukr.net',
+        'email' => 'KatOrif@ukr.net',
         'password' => bcrypt('111111'),
         'remember_token' => str_random(10),
     ];
@@ -34,7 +34,7 @@ $factory->defineAs(App\User::class, 'main', function(Faker $faker) {
 
 //defineAs - потому что define уже есть
 //admin - имя фабрики
-$factory->defineAs(App\User::class, 'admin', function(Faker $faker) {
+$factory->defineAs(App\User::class, 'test', function(Faker $faker) {
     return [
         'name' => 'admin',
         'email' => $faker->unique()->safeEmail,
@@ -44,7 +44,7 @@ $factory->defineAs(App\User::class, 'admin', function(Faker $faker) {
 });
 //так как заполняем связанные таблицы, нужно их заполнить тоже
 //таблица roles заполняем
-$factory->defineAs(App\Role::class, 'admin', function(Faker $faker) {
+$factory->defineAs(App\Role::class, 'test', function(Faker $faker) {
     return [
         'name' => 'Администратор',
         'slug' => 'admin',
@@ -53,7 +53,7 @@ $factory->defineAs(App\Role::class, 'admin', function(Faker $faker) {
     ];
 });
 //таблицы с нашим ФИО заполняем
-$factory->defineAs(App\UserAdditional::class, 'admin', function(Faker $faker) {
+$factory->defineAs(App\UserAdditional::class, 'test', function(Faker $faker) {
     // Генерация ФИО на русском, используя фасад Factory
     $faker = \Faker\Factory::create('ru_RU');
     return [
@@ -66,7 +66,7 @@ $factory->defineAs(App\UserAdditional::class, 'admin', function(Faker $faker) {
 
 $factory->defineAs(App\UserAdditional::class, 'main', function(Faker $faker) {
     return [
-        'lastname' => 'Корнышева',
+        'lastname' => 'Петрова',
         'firstname' => 'Екатерина',
         'patronymic' => 'Юрьевна',
 

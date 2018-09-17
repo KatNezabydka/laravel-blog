@@ -13,9 +13,19 @@
     <input type="text" class="form-control" name="name" placeholder="Имя"
            value="@if(old('name')){{old('name')}}@else{{$user->name or ""}}@endif" required>
 
+    <label for="">Фамилия</label>
+    {{--value используем if если это будет редактирование данных для заполнения данных в поля--}}
+    <input type="text" class="form-control" name="lastname" placeholder="Фамилия"
+           value="@if(old('lastname')){{old('lastname')}}@else{{$user->user_additional->lastname or ""}}@endif">
+
+    <label for="">Отлчество</label>
+    {{--value используем if если это будет редактирование данных для заполнения данных в поля--}}
+    <input type="text" class="form-control" name="patronymic" placeholder="Отчество"
+           value="@if(old('patronymic')){{old('patronymic')}}@else{{$user->user_additional->patronymic or ""}}@endif">
+
     <label for="">Email</label>
     <input type="email" class="form-control" name="email" placeholder="Email" value="@if(old('email')){{old('email')}}@else{{$user->email or ""}}@endif" required>
-                                                                                     @if(old('email')){{old('email')}}@else{{$user->email or ""}}@endif
+
 
     <label for="">Пароль</label>
     <input type="password" class="form-control" name="password">

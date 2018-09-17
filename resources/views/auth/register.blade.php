@@ -26,6 +26,34 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('Lastname') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="lastname" type="text" class="form-control{{ $errors->has('lastname') ? ' is-invalid' : '' }}" name="lastname" value="{{ old('lastname') }}" autofocus>
+
+                                @if ($errors->has('lastname'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('lastname') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="patronymic" class="col-md-4 col-form-label text-md-right">{{ __('Patronymic') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="patronymic" type="text" class="form-control{{ $errors->has('patronymic') ? ' is-invalid' : '' }}" name="patronymic" value="{{ old('patronymic') }}" autofocus>
+
+                                @if ($errors->has('patronymic'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('patronymic') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">

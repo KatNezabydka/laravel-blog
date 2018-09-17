@@ -15,6 +15,8 @@
 //Для отображения категорий и новостей
 Route::get('blog/category/{slug?}', 'BlogController@category')->name('category');
 Route::get('blog/article/{slug?}', 'BlogController@article')->name('article');
+//Для подписок
+Route::post('blog/article/{slug?}', 'BlogController@subscribe')->name('subscribe');
 
 //ADMIN, в скобках пишем параметры для всей группы маршрутов
 //Route фасад
@@ -25,6 +27,7 @@ Route::group(['prefix' => 'admin', 'namespace' =>'Admin', 'middleware' => ['auth
     //['as' =>'admin'] === name('admin')
     Route::resource('/category', 'CategoryController', ['as' =>'admin']);
     Route::resource('/article', 'ArticleController', ['as' =>'admin']);
+
     //т.к. namespase отличаются и мы добавим еще управление ролями, делаем группу
     //т.к это вложенный маршрут он уже то префикс и namespace дополняются от admin
     Route::group([ 'prefix' => 'user_management', 'namespace' => 'Usermanagement' ], function (){
@@ -33,12 +36,19 @@ Route::group(['prefix' => 'admin', 'namespace' =>'Admin', 'middleware' => ['auth
     });
 
 });
-
+Route::resource('comment','CommentController',['only' =>['store']]);
 
 Route::get('/', function () {
+//        App\Jobs\SendMessage::dispatch("TEST MESSAGE")->delay(now()->addMinute(1));
     return view('blog.home');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', function () {
+    return redirect('/admin');
+});
+
+
+
+//Route::get('/home', 'HomeController@index')->name('home');

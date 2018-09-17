@@ -7,8 +7,6 @@ use Illuminate\Support\Str;
 
 class Article extends Model
 {
-
-    //mass assigned
     protected $fillable = ['title', 'slug', 'description_short', 'description', 'image', 'image_show',
         'meta_title', 'meta_description', 'meta_keyword', 'published', 'created_by', 'modified_by'];
 
@@ -30,11 +28,39 @@ class Article extends Model
         return $this->morphToMany('App\Category', 'categoryable');
     }
 
+    //Belongs to
+    public function user(){
+        return $this->belongsTo('App\User', 'created_by', 'id');
+    }
+
+   //Article и Comment - многие к одному - у одной записи может быть множество комментариев, получаем коментарии, привязанные к записи
+    public function comments() {
+        return $this->hasMany('App\Comment');
+    }
+
     // Последние N новости
     public function scopeLastArticles($query, $count)
     {
         //возвращаем определенное количество $count
         return $query->orderBy('created_at', 'desc')->take($count)->get();
+    }
+
+// Последние N новости конкретного пользователя
+    public function scopeLastUserArticles($query, $count, $user_id)
+    {
+        //возвращаем определенное количество $count
+        return $query->orderBy('created_at', 'desc')->where('created_by', $user_id)->take($count)->get();
+    }
+    //    Все статьи пользователя
+    public function scopeUserArticles($query, $user_id)
+    {
+        return $query->where('created_by', $user_id)->orderBy('created_at', 'desc')->paginate(10);
+    }
+    //количество статей для конкретного пользователя
+    public function scopeCountUserArticles($query, $user_id)
+    {
+        //возвращаем определенное количество $count
+        return $query->where('created_by', $user_id)->count();
     }
 
 //    public function scopePublished($query)
