@@ -40,6 +40,13 @@ Route::resource('comment','CommentController',['only' =>['store']]);
 
 Route::get('/', 'HomeController@index');
 
+//Ajax Component
+Route::get('/getArticles', 'HomeController@getArticles');
+
+//Chart data
+Route::get('/data-chart', 'HomeController@chartData');
+
+
 
 //Route::get('/', function () {
 ////        App\Jobs\SendMessage::dispatch("TEST MESSAGE")->delay(now()->addMinute(1));

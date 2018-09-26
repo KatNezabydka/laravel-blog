@@ -23,6 +23,9 @@ window.Vue = require('vue');
 
 Vue.component('ex-comp', require('./components/ExampleComponent.vue'));
 Vue.component('new-comp', require('./components/NewComponent.vue'));
+Vue.component('ajax-comp', require('./components/AjaxComponent.vue'));
+Vue.component('chartline-comp', require('./components/ChartlineComponent.vue'));
+Vue.component('chartpie-comp', require('./components/ChartpieComponent.vue'));
 
 const app = new Vue({
     el: '#app'
