@@ -48,6 +48,8 @@ Route::get('/data-chart', 'HomeController@chartData');
 
 Route::get('/socket-chart', 'HomeController@newEvent');
 
+//Chat
+Route::get('/send-message', 'HomeController@sendMessage');
 
 
 //Route::get('/', function () {

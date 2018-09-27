@@ -5083,6 +5083,115 @@ module.exports.Rectangle = __webpack_require__(252);
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports) {
+
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file.
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier /* server only */
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    var functional = options.functional
+    var existing = functional
+      ? options.render
+      : options.beforeCreate
+
+    if (!functional) {
+      // inject component registration as beforeCreate hook
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    } else {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return existing(h, context)
+      }
+    }
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -5251,7 +5360,7 @@ Emitter.prototype.hasListeners = function(event){
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -5862,115 +5971,6 @@ exports.decodePayloadAsBinary = function (data, binaryType, callback) {
 };
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file.
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return existing(h, context)
-      }
-    }
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
-
 
 /***/ }),
 /* 10 */
@@ -7666,7 +7666,7 @@ function plural(ms, n, name) {
  */
 
 var debug = __webpack_require__(179)('socket.io-parser');
-var Emitter = __webpack_require__(7);
+var Emitter = __webpack_require__(8);
 var binary = __webpack_require__(181);
 var isArray = __webpack_require__(26);
 var isBuf = __webpack_require__(27);
@@ -8131,8 +8131,8 @@ module.exports = function (opts) {
  * Module dependencies.
  */
 
-var parser = __webpack_require__(8);
-var Emitter = __webpack_require__(7);
+var parser = __webpack_require__(9);
+var Emitter = __webpack_require__(8);
 
 /**
  * Module exports.
@@ -11017,7 +11017,7 @@ function isBuf(obj) {
 
 var eio = __webpack_require__(182);
 var Socket = __webpack_require__(34);
-var Emitter = __webpack_require__(7);
+var Emitter = __webpack_require__(8);
 var parser = __webpack_require__(20);
 var on = __webpack_require__(35);
 var bind = __webpack_require__(36);
@@ -11655,7 +11655,7 @@ function polling (opts) {
 
 var Transport = __webpack_require__(22);
 var parseqs = __webpack_require__(14);
-var parser = __webpack_require__(8);
+var parser = __webpack_require__(9);
 var inherit = __webpack_require__(15);
 var yeast = __webpack_require__(32);
 var debug = __webpack_require__(16)('engine.io-client:polling');
@@ -12067,7 +12067,7 @@ module.exports = function(arr, obj){
  */
 
 var parser = __webpack_require__(20);
-var Emitter = __webpack_require__(7);
+var Emitter = __webpack_require__(8);
 var toArray = __webpack_require__(201);
 var on = __webpack_require__(35);
 var bind = __webpack_require__(36);
@@ -36408,7 +36408,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(173);
-module.exports = __webpack_require__(294);
+module.exports = __webpack_require__(297);
 
 
 /***/ }),
@@ -36444,6 +36444,7 @@ Vue.component('ajax-comp', __webpack_require__(232));
 Vue.component('chartline-comp', __webpack_require__(235));
 Vue.component('chartpie-comp', __webpack_require__(287));
 Vue.component('socket-comp', __webpack_require__(291));
+Vue.component('socket-chat-component', __webpack_require__(294));
 
 var app = new Vue({
   el: '#app'
@@ -54624,7 +54625,7 @@ module.exports = __webpack_require__(183);
  * @api public
  *
  */
-module.exports.parser = __webpack_require__(8);
+module.exports.parser = __webpack_require__(9);
 
 
 /***/ }),
@@ -54636,10 +54637,10 @@ module.exports.parser = __webpack_require__(8);
  */
 
 var transports = __webpack_require__(29);
-var Emitter = __webpack_require__(7);
+var Emitter = __webpack_require__(8);
 var debug = __webpack_require__(16)('engine.io-client:socket');
 var index = __webpack_require__(33);
-var parser = __webpack_require__(8);
+var parser = __webpack_require__(9);
 var parseuri = __webpack_require__(25);
 var parseqs = __webpack_require__(14);
 
@@ -54776,7 +54777,7 @@ Socket.protocol = parser.protocol; // this is an int
 Socket.Socket = Socket;
 Socket.Transport = __webpack_require__(22);
 Socket.transports = __webpack_require__(29);
-Socket.parser = __webpack_require__(8);
+Socket.parser = __webpack_require__(9);
 
 /**
  * Creates transport of the given type.
@@ -55410,7 +55411,7 @@ try {
 
 var XMLHttpRequest = __webpack_require__(21);
 var Polling = __webpack_require__(30);
-var Emitter = __webpack_require__(7);
+var Emitter = __webpack_require__(8);
 var inherit = __webpack_require__(15);
 var debug = __webpack_require__(16)('engine.io-client:polling-xhr');
 
@@ -58860,7 +58861,7 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
  */
 
 var Transport = __webpack_require__(22);
-var parser = __webpack_require__(8);
+var parser = __webpack_require__(9);
 var parseqs = __webpack_require__(14);
 var inherit = __webpack_require__(15);
 var yeast = __webpack_require__(32);
@@ -75310,7 +75311,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 var __vue_script__ = __webpack_require__(227)
 /* template */
@@ -75430,7 +75431,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 var __vue_script__ = __webpack_require__(230)
 /* template */
@@ -75589,7 +75590,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 var __vue_script__ = __webpack_require__(233)
 /* template */
@@ -75744,7 +75745,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 var __vue_script__ = __webpack_require__(236)
 /* template */
@@ -88689,7 +88690,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 var __vue_script__ = __webpack_require__(288)
 /* template */
@@ -88839,7 +88840,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 var __vue_script__ = __webpack_require__(292)
 /* template */
@@ -89062,7 +89063,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn btn-primat btn-xs text mt-1 mh-100",
+              staticClass: "btn btn-primary btn-xs text mt-1 mh-100",
               on: { click: _vm.sendData }
             },
             [_vm._v("Обновить")]
@@ -89085,6 +89086,183 @@ if (false) {
 
 /***/ }),
 /* 294 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(7)
+/* script */
+var __vue_script__ = __webpack_require__(295)
+/* template */
+var __vue_template__ = __webpack_require__(296)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/SocketChatComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2c88996b", Component.options)
+  } else {
+    hotAPI.reload("data-v-2c88996b", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 295 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            dataMessages: [],
+            message: ""
+        };
+    },
+    mounted: function mounted() {
+        //добавляем клиент для связи с сервером
+        var socket = io('http://localhost:3000');
+        //событие, которое нужно отлавливать - название канала, : , пространство имен
+        //далее присваиваем значение для графика, который вернул нам сервер
+        //bind - делаем привязку, чтобы работало   this.data
+        socket.on("news-action:App\\Events\\NewMessage", function (data) {
+            //в событии result это ключ
+            this.dataMessages.push(data.message);
+        }.bind(this));
+    },
+
+    methods: {
+        sendMessage: function sendMessage() {
+            var _this = this;
+
+            axios({
+                method: 'get',
+                url: '/send-message',
+                params: {
+                    message: this.message
+                }
+            }).then(function (response) {
+                _this.message = "";
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 296 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-sm-12" }, [
+        _c("div", { staticClass: "from-group" }, [
+          _c(
+            "textarea",
+            { staticClass: "form-control", attrs: { rows: "6", readonly: "" } },
+            [_vm._v(_vm._s(_vm.dataMessages.join("\n")))]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "input-group mb-3" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.message,
+                expression: "message"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", placeholder: "Наберите сообщение" },
+            domProps: { value: _vm.message },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.message = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "input-group-append" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-secondary",
+                attrs: { type: "button" },
+                on: { click: _vm.sendMessage }
+              },
+              [_vm._v("Отправить")]
+            )
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2c88996b", module.exports)
+  }
+}
+
+/***/ }),
+/* 297 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

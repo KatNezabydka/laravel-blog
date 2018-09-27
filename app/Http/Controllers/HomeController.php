@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\NewEvent;
 use Illuminate\Http\Request;
+use App\Events\NewEvent;
+use App\Events\NewMessage;
 use App\Article;
 
 
@@ -69,6 +70,11 @@ class HomeController extends Controller
             }
         }
         return $result;
+    }
+
+    public function sendMessage(Request $request)
+    {
+        event(new NewMessage($request->input('message')));
     }
 
 }
