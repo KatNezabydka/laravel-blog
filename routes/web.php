@@ -46,6 +46,8 @@ Route::get('/getArticles', 'HomeController@getArticles');
 //Chart data
 Route::get('/data-chart', 'HomeController@chartData');
 
+Route::get('/socket-chart', 'HomeController@newEvent');
+
 
 
 //Route::get('/', function () {
