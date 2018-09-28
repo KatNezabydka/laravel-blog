@@ -1,0 +1,141 @@
+УСТАНОВКА LAMP
+APACHE
+sudo apt-get update
+sudo apt-get install apache2
+чтобы не было ошибки при проверке конфигурации Apache
+sudo apache2ctl configtest
+(https://www.digitalocean.com/community/tutorials/linux-apache-mysql-php-lamp-ubuntu-16-04-ru)
+Чтобы узнать IP сервера
+sudo apt-get install curl
+curl http://icanhazip.com
+188.163.101.100
+
+Добавить
+sudo nano /etc/apache2/apache2.conf
+ServerName домен_или_IP_адрес_сервера
+
+Перезапуск
+ sudo systemctl restart apache2
+Проверить статус
+sudo systemctl status apache2
+
+sudo ufw app list
+
+Проверка работает ли apache
+sudo apache2ctl configtest
+Проверим настройку профиля Apache Full, она должна разрешать трафик для портов 80 и 443:
+sudo ufw app info "Apache Full"
+Разрешим входящий трафик для этого профиля:
+sudo ufw allow in "Apache Full"
+
+MYSQL
+sudo apt-get install mysql-server
+sudo apt-get install mysql-server
+
+PHP
+sudo apt-get install php libapache2-mod-php php-mcrypt php-mysql
+
+NODEJS
+sudo apt install nodejs
+NPM
+sudo apt install npm
+
+Установка HOMESTEAD
+sudo apt install virtualbox
+sudo apt install vagrant
+sudo apt install git
+git clone https://github.com/laravel/homestead.git Homestead
+
+Настройка Homestead.yaml
+Прописать хост в etc/hosts
+Перейти в homestead
+Запуск виртуальной машины
+vagrant up
+vagrant ssh
+
+Далее composer install в папке проекта в vagrant
+Далее на локалке меняем файл env - DB
+Далее в vagrant 
+php artisan cache:clear
+php artisan migrate
+php artisan key:generate
+
+vagrant global-status
+перезапуск
+vagrant resume
+После добавление проекта перезапустить бокс
+vagrant reload --provision
+
+Показывает работает ли домен
+ping laravel-blog
+
+В VirtualBox установила этот пакет...
+apt-get install ifupdown
+
+
+sudo apt install dbeaver mc - командер
+
+тунель
+https://habr.com/post/331348/
+ssh -L 9999:localhost:5432 host2
+
+dbeaver
+sudo add-apt-repository ppa:serge-rider/dbeaver-ce
+sudo apt-get update
+sudo apt-get install dbeaver-ce
+
+ssh root@dev.webparadox.com
+/var/www/dev.domains/pharma
+
+
+Laravel
+php artisan cache:clear
+php artisan migrate
+php artisan key:generate
+
+php artisan db:seed
+
+Устанавливаем npm module в проект
+npm install
+Пересобирает данные
+npm run watch-poll
+
+Запуск Yarn
+yarn
+
+Установка графиков (сначала js потом vue)
+yarn add chart.js
+
+Убивает процессы
+killall -9 node
+
+
+Realtime app
+
+sudo apt install redis-server
+проверка - redis-cli (ping) exit
+
+В ларе в проекте
+composer install predis/predis
+в .env - BROADCAST_DRIVER=redis
+проверка
+netstat -an | grep 6379
+Установка Express для node
+
+Js клиент для Redis сервера 
+yarn add ioredis
+
+Библиотека для вебсокета для обмена данными в реальном времени
+yarn add socket.io
+
+sudo npm install --save nodemon -g
+
+nodemon server.js
+
+
+
+
+
+
+
+

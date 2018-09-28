@@ -37,8 +37,8 @@
         methods: {
             update: function () {
                 this.is_refresh = true;
-                axios.get('/getArticles').then((responce) => {
-                    this.articles = responce.data.data;
+                axios.get('/getArticles').then((response) => {
+                    this.articles = response.data.data;
                     this.is_refresh = false;
                     this.id++;
                 });
