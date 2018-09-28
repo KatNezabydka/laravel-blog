@@ -1,9 +1,8 @@
 <template>
     <div class="container">
         <div class="row">
-            <!--<button @click="update" class="btn btn-default" v-if="!is_refresh">Refresh - {{ id }}</button>-->
-            <!--<span class="badge badge-primary mb-1" v-if="is_refresh">Обновление...</span>-->
-            <!--<button @click="update" class="btn btn-default">Refresh - {{ id }}</button>-->
+            <button @click="update" class="btn btn-default" v-if="!is_refresh">Refresh - {{ id }}</button>
+            <span class="badge badge-primary mb-1" v-if="is_refresh">Обновление...</span>
             <table class="table">
                 <thead>
                 <tr>
