@@ -135,7 +135,80 @@ nodemon server.js
 
 
 
+Docker
+
+Образы - Реестры - Контейнеры
+IMAGES (just read) - для создания контейнеров
+REGISTER(public/privat) - где расположены образы
+hub.docker.com - публичный реестр
+CONTAINERS - как директории, в них содержится все, что нужно для работы приложения
+каждый контейнер создается из образа
 
 
+Docker Ubunta Install
 
+Docker:
+https://docs.docker.com/install/
+Docker-Compose:
+https://docs.docker.com/compose/install/
 
+Добавить пользователя в группу, чтобы постоянно не запускать от sudo
+sudo usermod -aG docker katnezabydka
+
+Запуск docker
+docker-compose up
+
+docker --version
+Docker version 18.03, build c97c6d6
+
+$ docker-compose --version
+docker-compose version 1.22.0, build 8dd22a9
+
+$ docker-machine --version
+docker-machine version 0.14.0, build 9ba6da9
+
+Проверка работы доккера - запуск простого образа
+docker run hello-world
+Запуск веб-сервера
+docker run -d -p 80:80 --name webserver nginx
+
+Просмотр сведенья о контейнере
+docker container ls
+docker ps -a
+Запустить доккер снова
+docker ps
+
+перезапуск контейнера
+docker start
+
+## List Docker CLI commands
+docker
+docker container --help
+
+## Display Docker version and info
+docker --version
+docker version
+docker info
+
+## Execute Docker image
+docker run hello-world
+
+## List Docker images
+docker image ls
+
+## List Docker containers (running, all, all in quiet mode)
+docker container ls
+docker container ls --all
+docker container ls -aq';
+
+service docker restart
+-it - создает сеанс интерактивной работы на подключаемом устройстве
+bash - инициализирует командную оболочку bash
+docker run -it ubuntu bash
+Инициализируем новый контейнер но задаем для него имя хоста (-h)
+docker run -h dockerloc -it ubuntu bash
+Инфо о контейнере
+docker inspect name_conteiner
+docker inspect jolly_chatterjee | grep IPAddress
+
+Удалить контейнер docker -rm name_conteiner
