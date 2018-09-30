@@ -7,11 +7,11 @@
 
 require('./bootstrap');
 
-//CKEDITOR
-$(document).ready(function () {
-    CKEDITOR.replace( 'description_short' );
-    CKEDITOR.replace( 'description' );
-});
+// //CKEDITOR
+// $(document).ready(function () {
+//     CKEDITOR.replace( 'description_short' );
+//     CKEDITOR.replace( 'description' );
+// });
 
 window.Vue = require('vue');
 
@@ -28,6 +28,7 @@ Vue.component('chartline-comp', require('./components/ChartlineComponent.vue'));
 Vue.component('chartpie-comp', require('./components/ChartpieComponent.vue'));
 Vue.component('socket-comp', require('./components/SocketComponent.vue'));
 Vue.component('socket-chat-component', require('./components/SocketChatComponent.vue'));
+Vue.component('socket-privat-chat-component', require('./components/SocketPrivatChatComponent.vue'));
 
 const app = new Vue({
     el: '#app'

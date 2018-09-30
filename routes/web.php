@@ -50,6 +50,7 @@ Route::get('/socket-chart', 'HomeController@newEvent');
 
 //Chat
 Route::get('/send-message', 'HomeController@sendMessage');
+Route::get('/send-private-message', 'HomeController@sendPrivateMessage');
 
 
 //Route::get('/', function () {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Events\NewEvent;
 use App\Events\NewMessage;
+use App\Events\PrivateMessage;
 use App\Article;
 
 
@@ -75,6 +76,14 @@ class HomeController extends Controller
     public function sendMessage(Request $request)
     {
         event(new NewMessage($request->input('message')));
+    }
+
+    public function sendPrivateMessage(Request $request)
+    {
+//        event(new PrivateMessage($request->input('message')));
+        //другой метод вызова event
+        PrivateMessage::dispatch($request->all());
+        return $request->all();
     }
 
 }

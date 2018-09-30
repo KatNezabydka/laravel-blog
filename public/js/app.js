@@ -5238,7 +5238,7 @@ function load() {
 
   // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
   if (!r && typeof process !== 'undefined' && 'env' in process) {
-    r = Object({"NODE_ENV":"development"}).DEBUG;
+    r = Object({"MIX_PUSHER_APP_KEY":"","MIX_PUSHER_APP_CLUSTER":"mt1","NODE_ENV":"development"}).DEBUG;
   }
 
   return r;
@@ -5271,20 +5271,6 @@ function localstorage() {
 
 /***/ }),
 /* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = {};
-module.exports.Arc = __webpack_require__(245);
-module.exports.Line = __webpack_require__(246);
-module.exports.Point = __webpack_require__(247);
-module.exports.Rectangle = __webpack_require__(248);
-
-
-/***/ }),
-/* 8 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -5390,6 +5376,20 @@ module.exports = function normalizeComponent (
     options: options
   }
 }
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {};
+module.exports.Arc = __webpack_require__(245);
+module.exports.Line = __webpack_require__(246);
+module.exports.Point = __webpack_require__(247);
+module.exports.Rectangle = __webpack_require__(248);
 
 
 /***/ }),
@@ -36060,7 +36060,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(171);
-module.exports = __webpack_require__(293);
+module.exports = __webpack_require__(296);
 
 
 /***/ }),
@@ -36076,11 +36076,11 @@ module.exports = __webpack_require__(293);
 
 __webpack_require__(172);
 
-//CKEDITOR
-$(document).ready(function () {
-  CKEDITOR.replace('description_short');
-  CKEDITOR.replace('description');
-});
+// //CKEDITOR
+// $(document).ready(function () {
+//     CKEDITOR.replace( 'description_short' );
+//     CKEDITOR.replace( 'description' );
+// });
 
 window.Vue = __webpack_require__(219);
 
@@ -36097,6 +36097,7 @@ Vue.component('chartline-comp', __webpack_require__(231));
 Vue.component('chartpie-comp', __webpack_require__(283));
 Vue.component('socket-comp', __webpack_require__(287));
 Vue.component('socket-chat-component', __webpack_require__(290));
+Vue.component('socket-privat-chat-component', __webpack_require__(293));
 
 var app = new Vue({
   el: '#app'
@@ -74524,7 +74525,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(8)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 var __vue_script__ = __webpack_require__(223)
 /* template */
@@ -74644,7 +74645,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(8)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 var __vue_script__ = __webpack_require__(226)
 /* template */
@@ -74803,7 +74804,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(8)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 var __vue_script__ = __webpack_require__(229)
 /* template */
@@ -74971,7 +74972,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(8)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 var __vue_script__ = __webpack_require__(232)
 /* template */
@@ -75287,7 +75288,7 @@ __webpack_require__(240)(Chart);
 
 Chart.defaults = __webpack_require__(2);
 Chart.Element = __webpack_require__(5);
-Chart.elements = __webpack_require__(7);
+Chart.elements = __webpack_require__(8);
 Chart.Interaction = __webpack_require__(44);
 Chart.layouts = __webpack_require__(11);
 Chart.platform = __webpack_require__(45);
@@ -84783,7 +84784,7 @@ webpackContext.id = 263;
 
 
 var defaults = __webpack_require__(2);
-var elements = __webpack_require__(7);
+var elements = __webpack_require__(8);
 var helpers = __webpack_require__(1);
 
 defaults._set('bar', {
@@ -85294,7 +85295,7 @@ module.exports = function(Chart) {
 
 
 var defaults = __webpack_require__(2);
-var elements = __webpack_require__(7);
+var elements = __webpack_require__(8);
 var helpers = __webpack_require__(1);
 
 defaults._set('bubble', {
@@ -85481,7 +85482,7 @@ module.exports = function(Chart) {
 
 
 var defaults = __webpack_require__(2);
-var elements = __webpack_require__(7);
+var elements = __webpack_require__(8);
 var helpers = __webpack_require__(1);
 
 defaults._set('doughnut', {
@@ -85787,7 +85788,7 @@ module.exports = function(Chart) {
 
 
 var defaults = __webpack_require__(2);
-var elements = __webpack_require__(7);
+var elements = __webpack_require__(8);
 var helpers = __webpack_require__(1);
 
 defaults._set('line', {
@@ -86127,7 +86128,7 @@ module.exports = function(Chart) {
 
 
 var defaults = __webpack_require__(2);
-var elements = __webpack_require__(7);
+var elements = __webpack_require__(8);
 var helpers = __webpack_require__(1);
 
 defaults._set('polarArea', {
@@ -86356,7 +86357,7 @@ module.exports = function(Chart) {
 
 
 var defaults = __webpack_require__(2);
-var elements = __webpack_require__(7);
+var elements = __webpack_require__(8);
 var helpers = __webpack_require__(1);
 
 defaults._set('radar', {
@@ -86721,7 +86722,7 @@ module.exports.title = __webpack_require__(281);
 
 
 var defaults = __webpack_require__(2);
-var elements = __webpack_require__(7);
+var elements = __webpack_require__(8);
 var helpers = __webpack_require__(1);
 
 defaults._set('global', {
@@ -87916,7 +87917,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(8)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 var __vue_script__ = __webpack_require__(284)
 /* template */
@@ -88066,7 +88067,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(8)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 var __vue_script__ = __webpack_require__(288)
 /* template */
@@ -88315,7 +88316,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(8)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 var __vue_script__ = __webpack_require__(291)
 /* template */
@@ -88392,7 +88393,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {
         //добавляем клиент для связи с сервером
-        var socket = io('http://localhost:3000');
+        //            var socket = io('http://localhost:3000');
+        var socket = io('http://laravel-blog:3000');
         //событие, которое нужно отлавливать - название канала, : , пространство имен
         //далее присваиваем значение для графика, который вернул нам сервер
         //bind - делаем привязку, чтобы работало   this.data
@@ -88489,6 +88491,260 @@ if (false) {
 
 /***/ }),
 /* 293 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(7)
+/* script */
+var __vue_script__ = __webpack_require__(294)
+/* template */
+var __vue_template__ = __webpack_require__(295)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/SocketPrivatChatComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-80a6a02e", Component.options)
+  } else {
+    hotAPI.reload("data-v-80a6a02e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 294 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            dataMessages: [],
+            message: "",
+            usersSelect: []
+        };
+    },
+    props: [
+    // инициализируем начальные параметры в пропсах
+    'users', 'user'],
+    created: function created() {
+        //добавляем клиент для связи с сервером
+        //            var socket = io('http://localhost:3000');
+        var socket = io('http://laravel-blog:3000');
+        //событие, которое нужно отлавливать - название канала, : , пространство имен
+        //далее присваиваем значение для графика, который вернул нам сервер
+        //bind - делаем привязку, чтобы работало   this.data
+        socket.on("news-action." + this.user.id + ":App\\Events\\PrivateMessage", function (data) {
+            //в событии result это ключ
+            this.dataMessages.push(data.message.user + ': ' + data.message.message);
+        }.bind(this));
+
+        //если все слушают канал, добавляем еще одного слушателя
+        socket.on("news-action.:App\\Events\\PrivateMessage", function (data) {
+            //в событии result это ключ
+            this.dataMessages.push(data.message.user + ': ' + data.message.message);
+        }.bind(this));
+    },
+
+    methods: {
+        sendMessage: function sendMessage() {
+            var _this = this;
+
+            //если пользователь не выбран в массиве будет одно значение
+            if (!this.usersSelect.length) this.usersSelect.push('news-action');
+
+            axios({
+                method: 'get',
+                url: '/send-private-message',
+                params: {
+                    message: this.message,
+                    channels: this.usersSelect,
+                    user: this.user.email
+                }
+            }).then(function (response) {
+                _this.dataMessages.push(_this.user.email + ': ' + _this.message);
+                _this.message = "";
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 295 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-sm-12" }, [
+        _c("div", { staticClass: "row form-group" }, [
+          _c("div", { staticClass: "row-sm-4" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.usersSelect,
+                    expression: "usersSelect"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { name: "", multiple: "" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.usersSelect = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              _vm._l(_vm.users, function(user) {
+                return _c(
+                  "option",
+                  { domProps: { value: "news-action." + user.id } },
+                  [_vm._v(_vm._s(user.email))]
+                )
+              })
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row-sm-12" }, [
+            _c(
+              "textarea",
+              {
+                staticClass: "form-control",
+                attrs: { rows: "6", readonly: "" }
+              },
+              [
+                _vm._v(
+                  "                        " +
+                    _vm._s(_vm.dataMessages.join("\n")) +
+                    "\n                    "
+                )
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "input-group mb-3" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.message,
+                expression: "message"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", placeholder: "Наберите сообщение" },
+            domProps: { value: _vm.message },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.message = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "input-group-append" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-secondary",
+                attrs: { type: "button" },
+                on: { click: _vm.sendMessage }
+              },
+              [_vm._v("Отправить")]
+            )
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-80a6a02e", module.exports)
+  }
+}
+
+/***/ }),
+/* 296 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
