@@ -153,8 +153,29 @@ sudo systemctl status apache2
 
 
 
+!!!Laravel ECHO SERVER!!!
 
-Docker
+//установить нужно его глобально
+sudo npm install -g laravel-echo-server
+
+//Настройка конфигурационного файла
+laravel-echo-server init
+
+//Запуск
+laravel-echo-server start
+
+//Нужно установить 2 js библиотеки
+npm install --save laravel-echo socket.io-client
+
+//запустить сервер
+laravel-echo-server start
+//запустить очереди, уоторые будут выполнять доставку сообщений пользователю
+php artisan queue:work
+
+
+
+
+!!!Docker!!!
 
 Образы - Реестры - Контейнеры
 IMAGES (just read) - для создания контейнеров
