@@ -114,13 +114,21 @@ Realtime app
 
 sudo apt install redis-server
 проверка - redis-cli (ping) exit
-
+Посмотреть приходят ли сообщения
+redis-cli monitor
 В ларе в проекте
 composer install predis/predis
 в .env - BROADCAST_DRIVER=redis
 проверка
 netstat -an | grep 6379
-Установка Express для node
+
+
+yarn add ioredis
+yarn add socket.io
+аналог npm:
+npm i express
+npm i ioredis
+npm i socket.io
 
 Js клиент для Redis сервера 
 yarn add ioredis
@@ -129,13 +137,45 @@ yarn add ioredis
 yarn add socket.io
 
 sudo npm install --save nodemon -g
-
 nodemon server.js
 
 
+запустить редис
+sudo systemctl status redis
 
 
-Docker
+остановить апатч
+systemctl stop apache2
+sudo systemctl stop nginx
+
+статус апатча
+sudo systemctl status apache2
+
+
+
+!!!Laravel ECHO SERVER!!!
+
+//установить нужно его глобально
+sudo npm install -g laravel-echo-server
+
+//Настройка конфигурационного файла
+laravel-echo-server init
+
+//Запуск
+laravel-echo-server start
+
+//Нужно установить 2 js библиотеки
+npm install --save laravel-echo socket.io-client
+
+//запустить сервер
+laravel-echo-server start
+//запустить очереди, уоторые будут выполнять доставку сообщений пользователю
+php artisan queue:work
+
+
+
+
+!!!Docker!!!
 
 Образы - Реестры - Контейнеры
 IMAGES (just read) - для создания контейнеров

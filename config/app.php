@@ -156,13 +156,14 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        //Use for chat with laravel-echo
+         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
         //Our package
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-        Unisharp\Ckeditor\ServiceProvider::class,
+//        Unisharp\Ckeditor\ServiceProvider::class,
 
         //Own providers
         App\Providers\BlogServiceProvider::class,
