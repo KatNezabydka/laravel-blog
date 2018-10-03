@@ -263,3 +263,46 @@ docker inspect name_conteiner
 docker inspect jolly_chatterjee | grep IPAddress
 
 Удалить контейнер docker -rm name_conteiner
+
+/-------------------------------------------------------/
+
+//Список образов
+docker images
+//Список контайнеров
+docker ps -a
+
+
+//Удалить все установленные контейнеры
+docker rm -v $(docker ps -aq -f status=exited)
+
+//Удалить все образы с локалки
+docker rmi $(docker images -a -q)
+
+/-------------------------------------------------------/
+
+!!! СОЗДАНИЕ КОНТЕЙНЕРА !!!
+
+//Имя контейнера имя хоста - мы внутри
+docker run -it --name myapp --hostname myapp ubuntu bash
+//обновляем индексы
+apt update
+//ставим пакет
+apt install cowsay
+//cоздаем символьную ссылку чтобы при запуске не писать
+ln -s /usr/games/cowsay /usr/bin/cowsay
+
+//чтобы запустить (/usr/games/cowsay - весь путь не пишем т.к.создали ссылку)
+cowsay "TEST"
+
+!!! КОНТЕЙНЕР В ОБРАЗ !!!
+
+//имя контейнера, имя пользователя docker hub/имя отображаемого образа
+docker commit myapp katnezabydka/myapp
+// вернет id sha256:df06415a68f3ece82570cfc2f8ba63dc833a566f6fcf4bb9fa8d284c3dc1fb7d
+
+// Запустить образ
+docker run katnezabydka/myapp cowsay "Hi"
+
+// Запушить наш образ на docker hub
+//docker login - залогиниться перед пушем
+docker push katnezabydka/myapp
