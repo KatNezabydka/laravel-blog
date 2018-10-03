@@ -98,4 +98,9 @@ class HomeController extends Controller
         PrivateChat::dispatch($request->all());
     }
 
+    public function room($id, Request $request)
+    {
+        return view('blog.room', ['room' => $id]);
+    }
+
 }

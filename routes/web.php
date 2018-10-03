@@ -55,6 +55,8 @@ Route::get('/send-private-message', 'HomeController@sendPrivateMessage');
 Route::post('/messages', 'HomeController@messages');
 Route::post('/private-messages', 'HomeController@privateMessages');
 
+Route::get('/room/{room}', 'HomeController@room');
+
 //Route::get('/', function () {
 ////        App\Jobs\SendMessage::dispatch("TEST MESSAGE")->delay(now()->addMinute(1));
 //    return view('blog.home');

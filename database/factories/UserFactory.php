@@ -72,3 +72,15 @@ $factory->defineAs(App\UserAdditional::class, 'main', function(Faker $faker) {
 
     ];
 });
+
+$factory->defineAs(App\Room::class, 'test1', function (Faker $faker) {
+    return [
+        'name' => 'Первая комната'
+    ];
+});
+
+$factory->defineAs(App\Room::class, 'test2', function(Faker $faker) {
+    return [
+        'name' => 'Вторя комната',
+    ];
+});

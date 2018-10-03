@@ -14,6 +14,7 @@
 
 <script>
     export default {
+        props: ['room'],
         data(){
            return {
                messages: [],
@@ -22,18 +23,18 @@
         },
         //момент монтирования компонента
         mounted() {
-           //отвечает за прослушивание канала со стороны пользователя
+            //отвечает за прослушивание канала со стороны пользователя
             //channel - какой канал
             //lesten - какое событие прослушиваем
             //при срабатывании используем стрелочную функцию
-            window.Echo.private('room.2')
+            window.Echo.private('room.' + this.room)
                     .listen('PrivateChat', ({data}) => {
                         this.messages.push(data.body)
             });
         },
         methods: {
             sendMessage: function () {
-                axios.post('/private-messages', {body: this.textMessage, room_id: 2});
+                axios.post('/private-messages', {body: this.textMessage, room_id: this.room});
 
                 this.messages.push(this.textMessage);
 
