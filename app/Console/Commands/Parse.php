@@ -10,6 +10,7 @@ namespace App\Console\Commands;
 
 
 use Illuminate\Console\Command;
+use Yangqi\Htmldom\Htmldom;
 
 class Parse extends Command
 {
@@ -33,6 +34,21 @@ class Parse extends Command
      * @return void
      */
     public function handle(){
-        dd('work');
+        $html = new Htmldom('https://www.sahibinden.com/kategori/emlak');
+        // Find all images
+//        foreach($html->find('img') as $element)
+//            echo $element->src . '<br>';
+//
+//        // Find all links
+//        foreach($html->find('a') as $element)
+//            echo $element->href . '<br>';
+        if ($html->size > 0){
+            foreach($html->find('a') as $link){
+                file_put_contents('storage/ParseArray', $link ->href.PHP_EOL, FILE_APPEND | LOCK_EX);
+            }
+
+        } else {
+            file_put_contents('storage/ErrorPages', 'https://www.sahibinden.com/kategori/emlak', FILE_APPEND | LOCK_EX);
+        }
     }
 }
