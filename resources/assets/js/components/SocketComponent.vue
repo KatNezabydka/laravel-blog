@@ -14,7 +14,7 @@
 
 
 <script>
-    import LineChart from './LineChart.js'
+    import LineChart from './old/LineChart.js'
     export default {
     // регистрируем компонент
         components: {

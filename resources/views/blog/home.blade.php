@@ -31,12 +31,12 @@
 
 
     {{--CHAT LARAVEL ECHO--}}
-    <div class="container">
-        <chat></chat>
-    </div>
+    {{--<div class="container">--}}
+        {{--<chat></chat>--}}
+    {{--</div>--}}
     {{--PRIVATE CHAT LARAVEL ECHO--}}
-    <div class="container">
+    {{--<div class="container">--}}
         {{--<private-chat></private-chat>--}}
-    </div>
+    {{--</div>--}}
 
 @endsection

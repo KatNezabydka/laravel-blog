@@ -21,14 +21,15 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('ex-comp', require('./components/ExampleComponent.vue'));
-Vue.component('new-comp', require('./components/NewComponent.vue'));
-Vue.component('ajax-comp', require('./components/AjaxComponent.vue'));
-Vue.component('chartline-comp', require('./components/ChartlineComponent.vue'));
-Vue.component('chartpie-comp', require('./components/ChartpieComponent.vue'));
+Vue.component('ex-comp', require('./components/old/ExampleComponent.vue'));
+Vue.component('new-comp', require('./components/old/NewComponent.vue'));
+Vue.component('ajax-comp', require('./components/old/AjaxComponent.vue'));
+Vue.component('chartline-comp', require('./components/old/ChartlineComponent.vue'));
+Vue.component('chartpie-comp', require('./components/old/ChartpieComponent.vue'));
 Vue.component('socket-comp', require('./components/SocketComponent.vue'));
 Vue.component('socket-chat-component', require('./components/SocketChatComponent.vue'));
 Vue.component('socket-privat-chat-component', require('./components/SocketPrivatChatComponent.vue'));
+//Laravel-Echo
 Vue.component('chat', require('./components/ChatComponent.vue'));
 Vue.component('private-chat', require('./components/PrivateChatComponent.vue'));
 

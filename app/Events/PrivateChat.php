@@ -25,7 +25,7 @@ class PrivateChat implements ShouldBroadcast
         $this->data = $data;
 
         //InteractsWithSockets - тут есть этт метод, который блокирует отправку сообщений тому же пользователю
-//        $this->dontBroadcastToCurrentUser();
+        $this->dontBroadcastToCurrentUser();
     }
 
     /**
@@ -35,6 +35,6 @@ class PrivateChat implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('room. ' . $this->data['room_id']);
+        return new PrivateChannel('room.' . $this->data['room_id']);
     }
 }

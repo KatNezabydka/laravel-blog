@@ -47,6 +47,13 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Comment');
     }
+    //Many to many
+    public function rooms()
+    {
+        return $this->belongsToMany(Room::class);
+    }
+
+
     //Получить подписчиков данного user
     public function subscribers(){
         return $this->belongsToMany('App\User', 'subscrible_user', 'user_id','subscrible_id');
@@ -55,5 +62,7 @@ class User extends Authenticatable
     public function users(){
         return $this->belongsToMany('App\User', 'subscrible_user','subscrible_id','user_id');
     }
+
+
 }
 
