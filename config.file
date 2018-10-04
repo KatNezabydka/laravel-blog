@@ -259,6 +259,8 @@ docker inspect jolly_chatterjee | grep IPAddress
 docker images
 //Список контайнеров
 docker ps -a
+//Проверка работает ли контейнер
+docker ps
 
 
 //Удалить все установленные контейнеры
@@ -266,6 +268,9 @@ docker rm -v $(docker ps -aq -f status=exited)
 
 //Удалить все образы с локалки
 docker rmi $(docker images -a -q)
+
+// Остановить запущенные контейнеры
+docker stop
 
 /-------------------------------------------------------/
 
@@ -295,3 +300,46 @@ docker run katnezabydka/myapp cowsay "Hi"
 // Запушить наш образ на docker hub
 //docker login - залогиниться перед пушем
 docker push katnezabydka/myapp
+
+/-------------------------------------------------------/
+1) Получение образа
+// -t имя образа
+docker build -t katnezabydka/app .
+
+2) Запуск, без указания команды
+docker run katnezabydka/app "TEST"
+
+/-------------------------------------------------------/
+!!! Соединение 2х контейнеров mariadb and adminer !!!
+
+// -d - запуск в фоновом режиме
+docker run --name mysqlserver -e MYSQL_ROOT_PASSWORD=123456 -d mariadb
+
+// --link mysqlserver:db - соединение
+//docker run показыает что нужно установить соединение между mysqlserver и adminer
+//8080:8080 - порт на локалке и внутри контейнера
+docker run --link mysqlserver:db -p 8080:8080 adminer
+
+/-------------------------------------------------------/
+!!! Docker compose!!!
+/-------------------------------------------------------/
+//запуск
+docker-compose up
+//запуск в фоновом режиме
+docker-compose up -d
+
+//получение ip address docker-machine
+docker-machine ip default
+
+//Перестройка проекта
+docker-compose build
+
+
+/-------------------------------------------------------/
+!!! Тома Доккера!!!
+/-------------------------------------------------------/
+//можно создать сразу том data
+
+docker run -v/data ubuntu
+
+//volumes - тома
