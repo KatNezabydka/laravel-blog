@@ -9,6 +9,11 @@
                        @keydown="actionUser">
                 <span v-if="isActive">{{ isActive.name }} набирает сообщение...</span>
             </div>
+            <div class="col-sm-4">
+                <ul>
+                    <li v-for="user in activeUsers">{{ user }}</li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -23,12 +28,16 @@
                textMessage: '',
                isActive: false,
                //чтобы не накладывалось набирает сообщение от нескольких пользователей
-               typingTimer: false
+               typingTimer: false,
+               //кто присоединился
+               activeUsers: []
            }
         },
         computed: {
             channel() {
-                return  window.Echo.private('room.' + this.room);
+                //чтобы отслеживать присутствующих
+                return  window.Echo.join('room.' + this.room);
+//                return  window.Echo.private('room.' + this.room);
             }
         },
         //момент монтирования компонента
@@ -37,14 +46,25 @@
             //channel - какой канал
             //listen - какое событие прослушиваем
             //при срабатывании используем стрелочную функцию
-           this.channel.listen('PrivateChat', ({data}) => {
+            //here для отслеживания присутстующих
+            //joining - пользователь, который подключился
+           this.channel
+                   .here((users) => {
+                        this.activeUsers = users
+                    })
+                    .joining((user) => {
+                        this.activeUsers.push(user);
+                    })
+                    .leaving((user) => {
+                        this.activeUsers.splice(this.activeUsers.indexOf(user), 1);
+                    })
+                   .listen('PrivateChat', ({data}) => {
                         this.messages.push(data.body)
                         //когда сообщение пришло, убираем надпись
-                        this.isActive = false;
-            })
-            .listenForWhisper('typing', (e) => {
-                //будет получать массив данных, в данном случае имя пользователя   this.channel.whisper('typing', {name: this.user.name});
-                this.isActive = e;
+                        this.isActive = false;})
+                    .listenForWhisper('typing', (e) => {
+                        //будет получать массив данных, в данном случае имя пользователя   this.channel.whisper('typing', {name: this.user.name});
+                        this.isActive = e;
 
             //если таймер истино отменяем выполнение и присваиваем значение таймера этому свойству
             if(this.typingTimer) clearTimeout(this.typingTimer);

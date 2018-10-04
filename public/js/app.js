@@ -89932,6 +89932,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['room', 'user'],
@@ -89941,13 +89946,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             textMessage: '',
             isActive: false,
             //чтобы не накладывалось набирает сообщение от нескольких пользователей
-            typingTimer: false
+            typingTimer: false,
+            //кто присоединился
+            activeUsers: []
         };
     },
 
     computed: {
         channel: function channel() {
-            return window.Echo.private('room.' + this.room);
+            //чтобы отслеживать присутствующих
+            return window.Echo.join('room.' + this.room);
+            //                return  window.Echo.private('room.' + this.room);
         }
     },
     //момент монтирования компонента
@@ -89958,7 +89967,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //channel - какой канал
         //listen - какое событие прослушиваем
         //при срабатывании используем стрелочную функцию
-        this.channel.listen('PrivateChat', function (_ref) {
+        //here для отслеживания присутстующих
+        //joining - пользователь, который подключился
+        this.channel.here(function (users) {
+            _this.activeUsers = users;
+        }).joining(function (user) {
+            _this.activeUsers.push(user);
+        }).leaving(function (user) {
+            _this.activeUsers.splice(_this.activeUsers.indexOf(user), 1);
+        }).listen('PrivateChat', function (_ref) {
             var data = _ref.data;
 
             _this.messages.push(data.body);
@@ -90052,6 +90069,15 @@ var render = function() {
               _vm._v(_vm._s(_vm.isActive.name) + " набирает сообщение...")
             ])
           : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-4" }, [
+        _c(
+          "ul",
+          _vm._l(_vm.activeUsers, function(user) {
+            return _c("li", [_vm._v(_vm._s(user))])
+          })
+        )
       ])
     ])
   ])

@@ -35,6 +35,7 @@ class PrivateChat implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('room.' . $this->data['room_id']);
+//        return new PrivateChannel('room.' . $this->data['room_id']);
+        return new PresenceChannel('room.' . $this->data['room_id']);
     }
 }
