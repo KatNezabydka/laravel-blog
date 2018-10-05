@@ -265,7 +265,7 @@ docker inspect jolly_chatterjee | grep IPAddress
 Удалить контейнер docker -rm name_conteiner
 
 /-------------------------------------------------------/
-
+/-------------------------------------------------------/
 //Список образов
 docker images
 //Список контайнеров
@@ -278,11 +278,18 @@ docker ps
 docker rm -v $(docker ps -aq -f status=exited)
 
 //Удалить все образы с локалки
-docker rmi $(docker images -a -q)
-
+docker rmi $(docker images -a -q) --force
 // Остановить запущенные контейнеры
 docker stop
 
+//Удалить контейнер с доккера
+docker-compose rm db
+
+Останавливаем все контейнеры в docker и docker-compose
+Потом удаляем все контейнеры
+Потом удаляем все образы
+
+/-------------------------------------------------------/
 /-------------------------------------------------------/
 
 !!! СОЗДАНИЕ КОНТЕЙНЕРА !!!
@@ -354,3 +361,27 @@ docker-compose build
 docker run -v/data ubuntu
 
 //volumes - тома
+docker-compose up
+docker-compose build
+Билдится в файл на компе, что указан в volumes, физически бд может быть там
+
+
+//посмотреть историю образа
+docker history image_name
+
+//если после распаковки сразу удалить пакеты в той же команде в Dockerfile то места образ будет занимать меньше
+run .../ && rm -rf /var/lib/apt/lists/*
+
+/-------------------------------------------------------/
+!!! Laravel in Docker !!!
+/-------------------------------------------------------/
+
+docker-compose up --build
+//Для входа в контейнер web - имя сервиса bash - оболочка
+docker-compose exec web bash
+
+//migration controller --resource
+php artisan make:Category -mcr
+//equal + factory
+php artisan make:Category -a
+

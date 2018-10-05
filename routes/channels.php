@@ -15,8 +15,16 @@
 //    return (int) $user->id === (int) $id;
 //});
 
+//Broadcast::channel('room.{room_id}', function ($user, $room_id) {
+//    //contains() - find in collection return true if find
+//    return (int) $user->rooms->contains($room_id);
+//
+//});
+
 Broadcast::channel('room.{room_id}', function ($user, $room_id) {
     //contains() - find in collection return true if find
-    return (int) $user->rooms->contains($room_id);
+    if($user->rooms->contains($room_id)){
+        return $user->name;
+    }
 
 });

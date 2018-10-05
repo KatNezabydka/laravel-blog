@@ -89930,28 +89930,67 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['room'],
+    props: ['room', 'user'],
     data: function data() {
         return {
             messages: [],
-            textMessage: ''
+            textMessage: '',
+            isActive: false,
+            //чтобы не накладывалось набирает сообщение от нескольких пользователей
+            typingTimer: false,
+            //кто присоединился
+            activeUsers: []
         };
     },
 
+    computed: {
+        channel: function channel() {
+            //чтобы отслеживать присутствующих
+            return window.Echo.join('room.' + this.room);
+            //                return  window.Echo.private('room.' + this.room);
+        }
+    },
     //момент монтирования компонента
     mounted: function mounted() {
         var _this = this;
 
         //отвечает за прослушивание канала со стороны пользователя
         //channel - какой канал
-        //lesten - какое событие прослушиваем
+        //listen - какое событие прослушиваем
         //при срабатывании используем стрелочную функцию
-        window.Echo.private('room.' + this.room).listen('PrivateChat', function (_ref) {
+        //here для отслеживания присутстующих
+        //joining - пользователь, который подключился
+        this.channel.here(function (users) {
+            _this.activeUsers = users;
+        }).joining(function (user) {
+            _this.activeUsers.push(user);
+        }).leaving(function (user) {
+            _this.activeUsers.splice(_this.activeUsers.indexOf(user), 1);
+        }).listen('PrivateChat', function (_ref) {
             var data = _ref.data;
 
             _this.messages.push(data.body);
+            //когда сообщение пришло, убираем надпись
+            _this.isActive = false;
+        }).listenForWhisper('typing', function (e) {
+            //будет получать массив данных, в данном случае имя пользователя   this.channel.whisper('typing', {name: this.user.name});
+            _this.isActive = e;
+
+            //если таймер истино отменяем выполнение и присваиваем значение таймера этому свойству
+            if (_this.typingTimer) clearTimeout(_this.typingTimer);
+            //задаем время счерез сколько убирать сообщение
+            _this.typingTimer = setTimeout(function () {
+                _this.isActive = false;
+            }, 2000);
         });
     },
 
@@ -89962,6 +90001,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.messages.push(this.textMessage);
 
             this.textMessage = '';
+        },
+        actionUser: function actionUser() {
+            //whisper - транслирует событие в канал, что пользователь набирает сообщение
+            this.channel.whisper('typing', {
+                name: this.user.name
+            });
         }
     }
 });
@@ -90009,6 +90054,7 @@ var render = function() {
               }
               return _vm.sendMessage($event)
             },
+            keydown: _vm.actionUser,
             input: function($event) {
               if ($event.target.composing) {
                 return
@@ -90016,7 +90062,22 @@ var render = function() {
               _vm.textMessage = $event.target.value
             }
           }
-        })
+        }),
+        _vm._v(" "),
+        _vm.isActive
+          ? _c("span", [
+              _vm._v(_vm._s(_vm.isActive.name) + " набирает сообщение...")
+            ])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-4" }, [
+        _c(
+          "ul",
+          _vm._l(_vm.activeUsers, function(user) {
+            return _c("li", [_vm._v(_vm._s(user))])
+          })
+        )
       ])
     ])
   ])
