@@ -309,3 +309,200 @@ contains() - Ларавель ищет в коллекции
 (int) $user->rooms->contains($room_id)
 
 
+!!!Docker!!!
+
+Образы - Реестры - Контейнеры
+IMAGES (just read) - для создания контейнеров
+REGISTER(public/privat) - где расположены образы
+hub.docker.com - публичный реестр
+CONTAINERS - как директории, в них содержится все, что нужно для работы приложения
+каждый контейнер создается из образа
+
+
+Docker Ubunta Install
+
+Docker:
+https://docs.docker.com/install/
+Docker-Compose:
+https://docs.docker.com/compose/install/
+
+Добавить пользователя в группу, чтобы постоянно не запускать от sudo
+sudo usermod -aG docker katnezabydka
+
+Запуск docker
+docker-compose up
+
+docker --version
+Docker version 18.03, build c97c6d6
+
+$ docker-compose --version
+docker-compose version 1.22.0, build 8dd22a9
+
+$ docker-machine --version
+docker-machine version 0.14.0, build 9ba6da9
+
+Проверка работы доккера - запуск простого образа
+docker run hello-world
+Запуск веб-сервера
+docker run -d -p 80:80 --name webserver nginx
+
+Просмотр сведенья о контейнере
+docker container ls
+docker ps -a
+Запустить доккер снова
+docker ps
+
+перезапуск контейнера
+docker start
+
+## List Docker CLI commands
+docker
+docker container --help
+
+## Display Docker version and info
+docker --version
+docker version
+docker info
+
+## Execute Docker image
+docker run hello-world
+
+## List Docker images
+docker image ls
+
+## List Docker containers (running, all, all in quiet mode)
+docker container ls
+docker container ls --all
+docker container ls -aq';
+
+service docker restart
+-it - создает сеанс интерактивной работы на подключаемом устройстве
+bash - инициализирует командную оболочку bash
+docker run -it ubuntu bash
+Инициализируем новый контейнер но задаем для него имя хоста (-h)
+docker run -h dockerloc -it ubuntu bash
+Инфо о контейнере
+docker inspect name_conteiner
+docker inspect jolly_chatterjee | grep IPAddress
+
+Удалить контейнер docker -rm name_conteiner
+
+//Список образов
+docker images
+//Список контайнеров
+docker ps -a
+//Проверка работает ли контейнер
+docker ps
+
+
+//Удалить все установленные контейнеры
+docker rm -v $(docker ps -aq -f status=exited)
+
+//Удалить все образы с локалки
+docker rmi $(docker images -a -q) --force
+// Остановить запущенные контейнеры
+docker stop
+
+//Удалить контейнер с доккера
+docker-compose rm db
+
+Останавливаем все контейнеры в docker и docker-compose
+Потом удаляем все контейнеры
+Потом удаляем все образы
+
+/-------------------------------------------------------/
+/-------------------------------------------------------/
+
+!!! СОЗДАНИЕ КОНТЕЙНЕРА !!!
+
+//Имя контейнера имя хоста - мы внутри
+docker run -it --name myapp --hostname myapp ubuntu bash
+//обновляем индексы
+apt update
+//ставим пакет
+apt install cowsay
+//cоздаем символьную ссылку чтобы при запуске не писать
+ln -s /usr/games/cowsay /usr/bin/cowsay
+
+//чтобы запустить (/usr/games/cowsay - весь путь не пишем т.к.создали ссылку)
+cowsay "TEST"
+
+!!! КОНТЕЙНЕР В ОБРАЗ !!!
+
+//имя контейнера, имя пользователя docker hub/имя отображаемого образа
+docker commit myapp katnezabydka/myapp
+// вернет id sha256:df06415a68f3ece82570cfc2f8ba63dc833a566f6fcf4bb9fa8d284c3dc1fb7d
+
+// Запустить образ
+docker run katnezabydka/myapp cowsay "Hi"
+
+// Запушить наш образ на docker hub
+//docker login - залогиниться перед пушем
+docker push katnezabydka/myapp
+
+/-------------------------------------------------------/
+1) Получение образа
+// -t имя образа
+docker build -t katnezabydka/app .
+
+2) Запуск, без указания команды
+docker run katnezabydka/app "TEST"
+
+/-------------------------------------------------------/
+!!! Соединение 2х контейнеров mariadb and adminer !!!
+
+// -d - запуск в фоновом режиме
+docker run --name mysqlserver -e MYSQL_ROOT_PASSWORD=123456 -d mariadb
+
+// --link mysqlserver:db - соединение
+//docker run показыает что нужно установить соединение между mysqlserver и adminer
+//8080:8080 - порт на локалке и внутри контейнера
+docker run --link mysqlserver:db -p 8080:8080 adminer
+
+/-------------------------------------------------------/
+!!! Docker compose!!!
+/-------------------------------------------------------/
+//запуск
+docker-compose up
+//запуск в фоновом режиме
+docker-compose up -d
+
+//получение ip address docker-machine
+docker-machine ip default
+
+//Перестройка проекта
+docker-compose build
+
+
+/-------------------------------------------------------/
+!!! Тома Доккера!!!
+/-------------------------------------------------------/
+//можно создать сразу том data
+
+docker run -v/data ubuntu
+
+//volumes - тома
+docker-compose up
+docker-compose build
+Билдится в файл на компе, что указан в volumes, физически бд может быть там
+
+
+//посмотреть историю образа
+docker history image_name
+
+//если после распаковки сразу удалить пакеты в той же команде в Dockerfile то места образ будет занимать меньше
+run .../ && rm -rf /var/lib/apt/lists/*
+
+/-------------------------------------------------------/
+!!! Laravel in Docker !!!
+/-------------------------------------------------------/
+
+docker-compose up --build
+//Для входа в контейнер web - имя сервиса bash - оболочка
+docker-compose exec web bash
+
+//migration controller --resource
+php artisan make:Category -mcr
+//equal + factory
+php artisan make:Category -a
+
