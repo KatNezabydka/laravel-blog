@@ -43,19 +43,19 @@ Route::get('/', 'HomeController@index');
 //Ajax Component
 Route::get('/getArticles', 'HomeController@getArticles');
 
-//Chart data
-Route::get('/data-chart', 'HomeController@chartData');
-Route::get('/socket-chart', 'HomeController@newEvent');
-
-//Chat
-Route::get('/send-message', 'HomeController@sendMessage');
-Route::get('/send-private-message', 'HomeController@sendPrivateMessage');
-
-//Echo-laravel chat
-Route::post('/messages', 'HomeController@messages');
-Route::post('/private-messages', 'HomeController@privateMessages');
-
-Route::get('/room/{room}', 'HomeController@room');
+////Chart data
+//Route::get('/data-chart', 'HomeController@chartData');
+//Route::get('/socket-chart', 'HomeController@newEvent');
+//
+////Chat
+//Route::get('/send-message', 'HomeController@sendMessage');
+//Route::get('/send-private-message', 'HomeController@sendPrivateMessage');
+//
+////Echo-laravel chat
+//Route::post('/messages', 'HomeController@messages');
+//Route::post('/private-messages', 'HomeController@privateMessages');
+//
+//Route::get('/room/{room}', 'HomeController@room');
 
 //Route::get('/', function () {
 ////        App\Jobs\SendMessage::dispatch("TEST MESSAGE")->delay(now()->addMinute(1));
