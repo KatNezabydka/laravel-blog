@@ -2,7 +2,7 @@
 window._ = require('lodash');
 window.Popper = require('popper.js').default;
 
-window.io = require('socket.io-client');
+// window.io = require('socket.io-client');
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -49,12 +49,21 @@ if (token) {
 // import Echo from 'laravel-echo'
 // //Подключаем клиентскую часть библиотеки socket.io
 //  window.io = require('socket.io-client');
+<<<<<<< HEAD
 //
+=======
+
+>>>>>>> 933969df2d17f08ad3fdce1925064e2a25527445
 // window.Echo = new Echo({
 //     broadcaster: 'socket.io',
 //     //js вернет текущее имя хоста
 //     host: window.location.hostname + ':6001'
 // });
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 933969df2d17f08ad3fdce1925064e2a25527445
 
 // window.Pusher = require('pusher-js');
 
