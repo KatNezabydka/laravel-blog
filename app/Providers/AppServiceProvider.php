@@ -16,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //жаловался что ключ слишком длинный
         Schema::defaultStringLength(191);
+
     }
 
     /**

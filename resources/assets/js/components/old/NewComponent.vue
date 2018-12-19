@@ -4,7 +4,7 @@
            <h1>I am new component</h1>
         </div>
         <div class="row justify-content-center">
-            <h2>And I'm incredible angry</h2>
+            <h2>{{ msg }}</h2>
         </div>
         <table class="table">
             <thead>
@@ -29,6 +29,11 @@
         props: [
             'articles'
         ],
+        data () {
+          return {
+              msg: 'Welcome'
+          }
+        },
         mounted() {
             this.update();
         },
@@ -39,3 +44,9 @@
         }
     }
 </script>
+
+<style scoped>
+    .container{
+        background-color: #c0c0c0;
+    }
+</style>

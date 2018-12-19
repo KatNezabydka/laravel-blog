@@ -7,7 +7,7 @@
     {{--<button  type="submit">AJAX</button>--}}
     {{--</form>--}}
     {{--<ajax-comp></ajax-comp>--}}
-    {{--<new-comp :articles="{{ $articles }}"></new-comp>--}}
+    <new-comp :articles="{{ $articles }}"></new-comp>
 
     {{--<h1>Chart Line Component</h1>--}}
     {{--<chartline-comp></chartline-comp>--}}
@@ -39,4 +39,7 @@
         {{--<private-chat></private-chat>--}}
     {{--</div>--}}
 
+
+
 @endsection
+

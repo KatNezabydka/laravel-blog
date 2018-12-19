@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Article;
 use App\Category;
+use App\Events\onAddArticleEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
 
 class ArticleController extends Controller
@@ -19,7 +21,7 @@ class ArticleController extends Controller
     public function index(Request $request)
     {
         $request->session()->reflash();
-        dd($request->session()->all());
+//        dd($request->session()->all());
 //        $articles = Article::orderBy('created_at', 'desc')->paginate(10);
         $articles = Article::UserArticles(Auth::id());
         //в параметрах список новостей, сортировать будем в обратном порядке по дате создания
@@ -77,6 +79,11 @@ class ArticleController extends Controller
             //$request->input('categories') - это id категорий, к которым относится новость
             $article->categories()->attach($request->input('categories'));
         endif;
+
+        $user = Auth::user();
+
+//        Event::fire(new onAddArticleEvent($article, $user));
+        event(new onAddArticleEvent($article, $user));
 
      return redirect()->route('admin.article.index');
     }
